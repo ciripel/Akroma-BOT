@@ -26,7 +26,7 @@ bot.on('ready', function (evt) {
 bot.on('message', function (user, userID, channelID, message, evt) {
     // Our bot nedds to know if it will execute a command
     // It will listen for messages that will start with `!`
-if (channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot-dev'){
+if (channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot'){
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
