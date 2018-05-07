@@ -61,7 +61,7 @@ fetch('http://aka.pool.sexy/api/stats')
             case 'about':
                 bot.sendMessage({
                     to: channelID,
-                    message: '\n\n• Version 1.2\n• Author: ciripel _(Discord: Amitabha#0517)_\n• Source Code: <https://github.com/ciripel/Akroma-BOT>'
+                    message: '\n\n• Version 1.3\n• Author: ciripel _(Discord: Amitabha#0517)_\n• Source Code: <https://github.com/ciripel/Akroma-BOT>'
                  });
             break;
             case 'hpow':
