@@ -24,9 +24,7 @@ bot.on('ready', function (evt) {
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot nedds to know if it will execute a command
-    // It will listen for messages that will start with `!`
-if (channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot'){
+if ((channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot') || bot.servers['403287406268252162'].members[userID].roles.includes('404343101512220684') || bot.servers['403287406268252162'].members[userID].roles.includes('406248037862604810') || bot.servers['403287406268252162'].members[userID].roles.includes('440147826664669194')){
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
@@ -194,12 +192,12 @@ fetch('https://api.akroma.io/prices')
     .then (json => {switch(true) {
                     case args[0]==undefined:bot.sendMessage({
                     to: channelID,
-                    message: '_Today the aproximate price of ***1 AKA*** is ***' + json.usdRaw +'$*** and yesterday was ***' + json.usdDayAgoRaw + '$***._'
+                    message: '_Today the approximate price of ***1 AKA*** is ***' + json.usdRaw +'$*** and yesterday was ***' + json.usdDayAgoRaw + '$***._'
                                         });
                     break;
                     case isNaN(args[0]):bot.sendMessage({
                     to: channelID,
-                    message: '_Today the aproximate price of ***1 AKA*** is ***' + json.usdRaw +'$*** and yesterday was ***' + json.usdDayAgoRaw + '$***._'
+                    message: '_Today the approximate price of ***1 AKA*** is ***' + json.usdRaw +'$*** and yesterday was ***' + json.usdDayAgoRaw + '$***._'
                                         });
                     break;
                     case args[0]==0:bot.sendMessage({
@@ -214,7 +212,7 @@ fetch('https://api.akroma.io/prices')
                     break;
                     default:bot.sendMessage({
                     to: channelID,
-                    message: '**' + args[0] +' AKA** = **' + json.usdRaw*args[0] + '$**\n _Today the aproximate price of ***1 AKA*** is ***' + json.usdRaw +'$*** and yesterday was ***' + json.usdDayAgoRaw + '$***._'
+                    message: '**' + args[0] +' AKA** = **' + json.usdRaw*args[0] + '$**\n _Today the approximate price of ***1 AKA*** is ***' + json.usdRaw +'$*** and yesterday was ***' + json.usdDayAgoRaw + '$***._'
                                     });
                     break;
                                  }
