@@ -29,7 +29,7 @@ if ((channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
-       
+
         args = args.splice(1);
         var cmd1 = args[0];
         switch(cmd) {
@@ -109,7 +109,7 @@ fetch('http://aka.pool.sexy/api/stats')
                     });
             break;
             case 'mninfo':
-fetch('http://api.akroma.io/addresses/0x80363B2956B00946D8F05D8B56DeAA2672613faf/transactions')
+fetch('http://api.akroma.io/addresses/0x848123468D05Aa670Da8b77ee3a6aB8b34aE33A3/transactions')
     .then(res => res.json())
     .then(json => lrew_date=json.transactions[0].timestamp)
 fetch('https://akroma.io/api/network')
@@ -123,7 +123,7 @@ fetch('https://akroma.io/api/network')
 fetch('https://stats.akroma.io/akroma')
     .then(res => res.json())
     .then(json => avgBT=json.avgBlocktime)
-fetch('http://api.akroma.io/addresses/0x80363B2956B00946D8F05D8B56DeAA2672613faf/transactions')
+fetch('http://api.akroma.io/addresses/0x848123468D05Aa670Da8b77ee3a6aB8b34aE33A3/transactions')
     .then(res => res.json())
     .then(json => todayRwds=json)
 fetch('https://api.akroma.io/prices')
