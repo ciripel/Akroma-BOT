@@ -24,7 +24,8 @@ bot.on('ready', function (evt) {
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
-if (bot.channels[channelID].name != 'proof-of-work' && bot.channels[channelID].name != 'hooks' && ((channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot') || bot.servers['403287406268252162'].members[userID].roles.indexOf('404343101512220684')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('406248037862604810')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('440147826664669194')!=-1)) {
+if (bot.servers['403287406268252162'].members[userID]!=undefined) {
+if ((channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot') || bot.servers['403287406268252162'].members[userID].roles.indexOf('404343101512220684')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('406248037862604810')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('440147826664669194')!=-1) {
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
@@ -139,17 +140,17 @@ fetch('https://akroma.io/api/network')
                     case isNaN(args[0]): bot.sendMessage({
                     to: channelID,
                     message: 'Input the the number of nodes, like `!mnrewards 1`.'
-                                        });                    
+                                        });
                     break;
                     case args[0]==0 : bot.sendMessage({
                     to: channelID,
                     message: 'Wow, You did it friend! You have reached the unmeasurable valor of zero masternodes!'
-                                        });                    
+                                        });
                     break;
                     case args[0]<0 : bot.sendMessage({
                     to: channelID,
                     message: 'Are you in debt my friend?! How have you arrived in this position in the crypto world?! How can you be in debt in a world without banks?! :troll:'
-                                        });                    
+                                        });
                     break;
                     default:
                     bot.sendMessage({
@@ -323,5 +324,6 @@ fetch('https://api.akroma.io/prices')
                 });
          }
      }
-   } 
+   }
+  }
 });
