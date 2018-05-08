@@ -24,7 +24,7 @@ bot.on('ready', function (evt) {
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
-if (channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot') {
+if ((channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot') || bot.servers['403287406268252162'].members[userID].roles.indexOf('404343101512220684')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('406248037862604810')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('440147826664669194')!=-1) {
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
@@ -61,7 +61,7 @@ fetch('http://aka.pool.sexy/api/stats')
             case 'about':
                 bot.sendMessage({
                     to: channelID,
-                    message: '\n\n• Version 1.2\n• Author: ciripel _(Discord: Amitabha#0517)_\n• Source Code: <https://github.com/ciripel/Akroma-BOT>'
+                    message: '\n\n• Version 1.3\n• Author: ciripel _(Discord: Amitabha#0517)_\n• Source Code: <https://github.com/ciripel/Akroma-BOT>'
                  });
             break;
             case 'hpow':
