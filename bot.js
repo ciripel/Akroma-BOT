@@ -24,7 +24,7 @@ bot.on('ready', function (evt) {
     logger.info(bot.username + ' - (' + bot.id + ')');
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
-if ((channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot') || bot.servers['403287406268252162'].members[userID].roles.indexOf('404343101512220684')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('406248037862604810')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('440147826664669194')!=-1) {
+if (bot.channels[channelID].name != 'proof-of-work' && bot.channels[channelID].name != 'hooks' && ((channelID in bot.directMessages || bot.channels[channelID].name == 'akroma-bot') || bot.servers['403287406268252162'].members[userID].roles.indexOf('404343101512220684')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('406248037862604810')!=-1 || bot.servers['403287406268252162'].members[userID].roles.indexOf('440147826664669194')!=-1)) {
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
