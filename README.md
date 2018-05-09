@@ -1,5 +1,5 @@
 # Akroma-BOT v.1.3
-Discord bot for Akroma Official
+# Discord bot for Akroma Official
 
 v.1.3 - deloyed 08.05.2018
 - allows @Core Team, @Moderator and @Bot Developer to call the bot in all channels
