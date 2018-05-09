@@ -1,2 +1,2 @@
-# Akroma-BOT v
+# Akroma-BOT
 Discord bot for Akroma Official
