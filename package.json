@@ -5,8 +5,7 @@
   "main": "bot.js",
   "author": "Amitabha",
   "dependencies": {
-    "discord.io": "github:woor/discord.io#gateway_v6",
-    "node-fetch": "^2.1.2",
-    "winston": "^2.4.2"
+    "discord.js": "^11.3.2",
+    "node-fetch": "^2.1.2"
   }
 }
