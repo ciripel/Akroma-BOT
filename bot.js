@@ -3,12 +3,16 @@ const fetch = require('node-fetch');
 const client = new Discord.Client();
 var auth = require('./auth.json');
 var fix = 0;
+var lrew_date = 1;
+var avgBT = 12;
+var usdRaw = 0.24;
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.on('message', msg => {
+if (msg.webhookID === null) {
 if(msg.channel.name === 'akroma-bot' || msg.channel.type === 'dm' || msg.member.roles.find('name', 'Core Team') || msg.member.roles.find('name', 'Moderator') || msg.member.roles.find('name', 'Bot Developer')){
 if (msg.content.substring(0, 1) === '!') {
     var args = msg.content.substring(1).split(' ');
@@ -204,15 +208,13 @@ if (msg.content.substring(0, 1) === '!') {
                     msg.channel.send('Unrecognized pool. Please check again.')
                 break;}
         break;
-        case 'help':
-            
-        break;
         default:
             msg.channel.send('Command not recognized. `!help` to get a list of commands.')
         break;
         }
       }
-     } 
+     }
+    }
 });
 
 client.login(auth.token);
