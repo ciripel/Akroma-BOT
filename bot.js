@@ -7,14 +7,27 @@ var lrew_date = 1;
 var avgBT = 12;
 var usdRaw = 0.24;
 
+function timeConverter(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp * 1000);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return time;
+}
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.on('message', msg => {
+if (msg.content.substring(0, 1) === '!') {
 if (msg.webhookID === null) {
 if(msg.channel.name === 'akroma-bot' || msg.channel.type === 'dm' || msg.member.roles.find('name', 'Core Team') || msg.member.roles.find('name', 'Moderator') || msg.member.roles.find('name', 'Bot Developer')){
-if (msg.content.substring(0, 1) === '!') {
     var args = msg.content.substring(1).split(' ');
     var cmd = args[0];
     args = args.splice(1);
@@ -74,7 +87,7 @@ if (msg.content.substring(0, 1) === '!') {
                 .then(json => lrew_date=json.transactions[0].timestamp)
             fetch('https://akroma.io/api/network')
                 .then(res => res.json())
-                .then (json => msg.channel.send('• Users •      **' + json.data.users + '**\n• Nodes •     **' + json.data.nodes + '**\n• Locked •    **' + json.data.locked + ' AKA**\n• Rewards • **' + json.data.akaTotal + ' AKA**\n• Last rewards were paid **' +  Date(lrew_date) + '**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>'));
+                .then (json => msg.channel.send('• Users •      **' + json.data.users + '**\n• Nodes •     **' + json.data.nodes + '**\n• Locked •    **' + json.data.locked + ' AKA**\n• Rewards • **' + json.data.akaTotal + ' AKA**\n• Last rewards were paid **' +  timeConverter(lrew_date) + '**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>'));
         break;
         case 'mnrewards':
             fetch('https://stats.akroma.io/akroma')
