@@ -27,7 +27,7 @@ client.on('ready', () => {
 client.on('message', msg => {
 if (msg.content.substring(0, 1) === '!') {
 if (msg.webhookID === null) {
-if(msg.channel.name === 'akroma-bot' || msg.channel.type === 'dm' || msg.member.roles.find('name', 'Core Team') || msg.member.roles.find('name', 'Moderator') || msg.member.roles.find('name', 'Bot Developer')){
+if(msg.channel.name === 'akroma-bot' || msg.channel.type === 'dm' || msg.member.roles.find('name', 'Core-Team') || msg.member.roles.find('name', 'Moderator') || msg.member.roles.find('name', 'Bot Developer')){
     var args = msg.content.substring(1).split(' ');
     var cmd = args[0];
     args = args.splice(1);
