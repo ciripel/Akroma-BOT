@@ -103,7 +103,7 @@ if(msg.channel.name === 'akroma-bot' || msg.channel.type === 'dm' || msg.member.
                 .then(res => res.json())
                 .then (json => {switch (true) {
                     case args[0]===undefined:
-                        msg.channel.send('**'+args[0]+'** masternode(s) will give you approximately **' + Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000 + ' AKA** _(***' + Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000 + '$***)_ per **day**.\n_The accumulated rewards are not included in this approximation.\nFor example the rewards for the last 3 days (with accumulated rewards) for one masternode were ***'+ Math.floor(todayRwds.transactions[0].value*1000)/1000 + ', ' + Math.floor(todayRwds.transactions[1].value*1000)/1000 + ' and ' + Math.floor(todayRwds.transactions[2].value*1000)/1000 + ' AKA***._')
+                        msg.channel.send('**1** masternode(s) will give you approximately **' + Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000 + ' AKA** _(***' + Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000 + '$***)_ per **day**.\n_The accumulated rewards are not included in this approximation.\nFor example the rewards for the last 3 days (with accumulated rewards) for one masternode were ***'+ Math.floor(todayRwds.transactions[0].value*1000)/1000 + ', ' + Math.floor(todayRwds.transactions[1].value*1000)/1000 + ' and ' + Math.floor(todayRwds.transactions[2].value*1000)/1000 + ' AKA***._')
                     break;
                     case isNaN(args[0]):
                         msg.channel.send('Input the the number of nodes, like `!mnrewards 1`.')
