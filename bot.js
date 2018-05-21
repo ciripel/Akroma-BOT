@@ -45,7 +45,7 @@ if(msg.channel.name === 'akroma-bot' || msg.channel.type === 'dm' || msg.member.
             msg.channel.send('**Akroma Website** • <https://akroma.io/>\n**Akroma Announcement** • <https://bitcointalk.org/index.php?topic=2844280>\n**Akroma Whitepaper** • <http://bit.ly/2EMQ4E4>\n**Akroma Github** • <https://github.com/akroma-project/>\n**Akroma Wallets** • <https://wallet.akroma.io/> <https://play.google.com/store/apps/details?id=com.wallet.crypto.akroma&hl=en> <https://chrome.google.com/webstore/detail/akroma/gghgmpjmebiapnjjpgakibnpklhbnkof>\n**Akroma Block Explorer** • <https://akroma.io/explorer>\n**Akroma Community** • <https://medium.com/akroma> <https://twitter.com/akroma_io/> <https://www.facebook.com/AkromaIO/> <https://instagram.com/akroma.io>')
         break;
         case 'roadmap':
-            msg.channel.send('• **Awesome Road-map** •\n<https://medium.com/akroma/akroma-road-map-q2-2018-ee616bb2d5f8>')
+            msg.channel.send('• **Akroma Road-map** •\n<https://medium.com/akroma/akroma-road-map-q2-2018-ee616bb2d5f8>')
         break;
         case 'awesome':
             msg.channel.send('• **Awesome Akroma** •\n<https://github.com/akroma-project/awesome-akroma/blob/master/README.md>')
