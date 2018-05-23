@@ -41,7 +41,7 @@ if(msg.channel.name === 'akroma-bot' || msg.channel.type === 'dm' || msg.member.
         case 'help':
             msg.channel.send('-- `!help` | This is your help.\n-- `!links` | Useful links.\n-- `!diff` | Current network difficulty.\n-- `!mninfo` | Dashboard info.\n-- `!hpow [your Mh/s]` | Approximate AKA per hour/day.\n-- `!mnrewards [no. of nodes]` | Approximate AKA reward per day.\n-- `!akausd [amount]` | Current price in USD.\n-- `!roadmap` | Link to Akroma Road-map.\n-- `!awesome` | Link to Awesome Akroma.\n-- `!exchange` | Current Akroma exchanges.\n-- `!pool [POOL]` | Akroma mining pools [_connection info_].\n-- `!about` | Info about this bot.')
         break;
-        case 'members': if (msg.member.roles.find('name', 'Core-Team')){
+        case 'members': if (msg.channel.type !== 'dm' && msg.member.roles.find('name', 'Core-Team')){
             msg.channel.send('Number of members on Akroma Official Discord: **'+ msg.guild.memberCount+'**')}
         break;
         case 'links':
