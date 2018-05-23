@@ -4,6 +4,8 @@
 
 v.1.3 - deloyed 08.05.2018
 - allows @Core Team, @Moderator and @Bot Developer to call the bot in all channels
+- added !roadmap command
+- added !members command (called only by @Core-Team)
 
 v.1.2 - delpoyed 07.05.2018
 - added !exchange and !pool [POOL] command
