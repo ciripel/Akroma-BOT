@@ -41,6 +41,9 @@ if(msg.channel.name === 'akroma-bot' || msg.channel.type === 'dm' || msg.member.
         case 'help':
             msg.channel.send('-- `!help` | This is your help.\n-- `!links` | Useful links.\n-- `!diff` | Current network difficulty.\n-- `!mninfo` | Dashboard info.\n-- `!hpow [your Mh/s]` | Approximate AKA per hour/day.\n-- `!mnrewards [no. of nodes]` | Approximate AKA reward per day.\n-- `!akausd [amount]` | Current price in USD.\n-- `!roadmap` | Link to Akroma Road-map.\n-- `!awesome` | Link to Awesome Akroma.\n-- `!exchange` | Current Akroma exchanges.\n-- `!pool [POOL]` | Akroma mining pools [_connection info_].\n-- `!about` | Info about this bot.')
         break;
+        case 'members': if (msg.member.roles.find('name', 'Core-Team')){
+            msg.channel.send('Number of members on Akroma Official Discord: **'+ msg.guild.memberCount+'**')}
+        break;
         case 'links':
             msg.channel.send('**Akroma Website** • <https://akroma.io/>\n**Akroma Announcement** • <https://bitcointalk.org/index.php?topic=2844280>\n**Akroma Whitepaper** • <http://bit.ly/2EMQ4E4>\n**Akroma Github** • <https://github.com/akroma-project/>\n**Akroma Wallets** • <https://wallet.akroma.io/> <https://play.google.com/store/apps/details?id=com.wallet.crypto.akroma&hl=en> <https://chrome.google.com/webstore/detail/akroma/gghgmpjmebiapnjjpgakibnpklhbnkof>\n**Akroma Block Explorer** • <https://akroma.io/explorer>\n**Akroma Community** • <https://medium.com/akroma> <https://twitter.com/akroma_io/> <https://www.facebook.com/AkromaIO/> <https://instagram.com/akroma.io>')
         break;
