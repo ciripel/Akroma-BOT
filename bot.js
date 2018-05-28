@@ -131,7 +131,7 @@ client.on('message', msg => {
         case 'exchange':
           switch (cmd1){
           case undefined:
-            msg.channel.send('--`exchange stoc` | **Stocks.Exchange** • <https://stocks.exchange/trade/AKA/BTC>\n--`exchange grav` | **Graviex** • <https://graviex.net/markets/akabtc>\n\nUse `!exchange [EXCHANGE]` for additional info');
+            msg.channel.send('-- `exchange stoc` | **Stocks.Exchange** • <https://stocks.exchange/trade/AKA/BTC>\n-- `exchange grav` | **Graviex** • <https://graviex.net/markets/akabtc>\n\nUse `!exchange [EXCHANGE]` for additional info');
             break;
           case 'stoc':
             fetch('https://stocks.exchange/api2/ticker')
