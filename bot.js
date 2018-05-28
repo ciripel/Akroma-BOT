@@ -1,24 +1,24 @@
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const client = new Discord.Client();
-var auth = require('./auth.json');
-var fix = 0;
-var i = 0;
-var todayRwds = {};
-var lrew_date = 1;
-var avgBT = 12;
-var usdRaw = 0.24;
+const auth = require('./auth.json');
+let fix = 0;
+let i = 0;
+let todayRwds = {};
+let lrew_date = 1;
+let avgBT = 12;
+let usdRaw = 0.24;
 
 function timeConverter(UNIX_timestamp){
-  var a = new Date(UNIX_timestamp * 1000);
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes();
-  var sec = a.getSeconds();
-  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  let a = new Date(UNIX_timestamp * 1000);
+  let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  let year = a.getFullYear();
+  let month = months[a.getMonth()];
+  let date = a.getDate();
+  let hour = a.getHours();
+  let min = a.getMinutes();
+  let sec = a.getSeconds();
+  let time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
   return time;
 }
 
@@ -38,13 +38,13 @@ client.on('message', msg => {
         case 'diff':
           fetch('http://aka.pool.sexy/api/stats')
             .then(res => res.json())
-            .then (json => msg.channel.send('Current network difficulty is **'+ Math.floor(json.nodes[0].difficulty/1000000000)/1000 + ' Th**.'));
+            .then (json => msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.`));
           break;
         case 'help':
-          msg.channel.send('-- `!help` | This is your help.\n-- `!links` | Useful links.\n-- `!diff` | Current network difficulty.\n-- `!mninfo` | Dashboard info.\n-- `!hpow [your Mh/s]` | Approximate AKA per hour/day.\n-- `!mnrewards [no. of nodes]` | Approximate AKA reward per day.\n-- `!akausd [amount]` | Current price in USD.\n-- `!roadmap` | Link to Akroma Road-map.\n-- `!awesome` | Link to Awesome Akroma.\n-- `!exchange` | Current Akroma exchanges.\n-- `!pool [POOL]` | Akroma mining pools [_connection info_].\n-- `!about` | Info about this bot.');
+          msg.channel.send('-- `!help` | This is your help.\n-- `!links` | Useful links.\n-- `!diff` | Current network difficulty.\n-- `!mninfo` | Dashboard info.\n-- `!hpow [your Mh/s]` | Approximate AKA per hour/day.\n-- `!mnrewards [no. of nodes]` | Approximate AKA reward per day.\n-- `!akausd [amount]` | Current price in USD.\n-- `!roadmap` | Link to Akroma Road-map.\n-- `!awesome` | Link to Awesome Akroma.\n-- `!exchange [EXCHANGE]` | Current Akroma exchanges [_exchange info_].\n-- `!pool [POOL]` | Akroma mining pools [_connection info_].\n-- `!about` | Info about this bot.');
           break;
         case 'members': if (msg.channel.type !== 'dm' && msg.member.roles.find('name', 'Core-Team')){
-          msg.channel.send('Number of members on Akroma Official Discord: **'+ msg.guild.memberCount+'**');}
+          msg.channel.send(`Number of members on Akroma Official Discord: **${msg.guild.memberCount}**`);}
           break;
         case 'links':
           msg.channel.send('**Akroma Website** • <https://akroma.io/>\n**Akroma Announcement** • <https://bitcointalk.org/index.php?topic=2844280>\n**Akroma Whitepaper** • <http://bit.ly/2EMQ4E4>\n**Akroma Github** • <https://github.com/akroma-project/>\n**Akroma Wallets** • <https://wallet.akroma.io/> <https://play.google.com/store/apps/details?id=com.wallet.crypto.akroma&hl=en> <https://chrome.google.com/webstore/detail/akroma/gghgmpjmebiapnjjpgakibnpklhbnkof>\n**Akroma Block Explorer** • <https://akroma.io/explorer>\n**Akroma Community** • <https://medium.com/akroma> <https://twitter.com/akroma_io/> <https://www.facebook.com/AkromaIO/> <https://instagram.com/akroma.io>');
@@ -84,7 +84,7 @@ client.on('message', msg => {
               msg.channel.send('You deffinatly have reached something umbelievable! Nobody have **unmined** anything till now! Do not forget to register the tech! :joy:');
               break;
             default:
-              msg.channel.send('Current network difficulty is **'+ Math.floor(json.nodes[0].difficulty/1000000000)/1000 + ' Th**.\n' + 'A hashrate of **'+ args[0] + ' Mh/s** will get you approximately **' + Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT)/1000 + ' AKA** _(***' + Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT*usdRaw)/1000 + '$***)_ per **hour** and **' + Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*7/avgBT)/1000 + ' AKA** _(***' + Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7*24/avgBT*usdRaw)/1000 + '$***)_ per **day** at current network difficulty.');
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
             }
             });
@@ -95,7 +95,7 @@ client.on('message', msg => {
             .then(json => lrew_date=json.transactions[0].timestamp);
           fetch('https://akroma.io/api/network')
             .then(res => res.json())
-            .then (json => msg.channel.send('• Users •      **' + json.data.users + '**\n• Nodes •     **' + json.data.nodes + '**\n• Locked •    **' + json.data.locked + ' AKA**\n• Rewards • **' + json.data.akaTotal + ' AKA**\n• Last rewards were paid **' +  timeConverter(lrew_date) + '**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>'));
+            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>`));
           break;
         case 'mnrewards':
           fetch('https://stats.akroma.io/akroma')
@@ -111,7 +111,7 @@ client.on('message', msg => {
             .then(res => res.json())
             .then (json => {switch (true) {
             case args[0]===undefined:
-              msg.channel.send('**1** masternode(s) will give you approximately **' + Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000 + ' AKA** _(***' + Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000 + '$***)_ per **day**.\n_The accumulated rewards are not included in this approximation.\nFor example the rewards for the last 3 days (with accumulated rewards) for one masternode were ***'+ Math.floor(todayRwds.transactions[0].value*1000)/1000 + ', ' + Math.floor(todayRwds.transactions[1].value*1000)/1000 + ' and ' + Math.floor(todayRwds.transactions[2].value*1000)/1000 + ' AKA***._');
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.\n_The accumulated rewards are not included in this approximation.\nFor example the rewards for the last 3 days (with accumulated rewards) for one masternode were ***${Math.floor(todayRwds.transactions[0].value*1000)/1000}, ${Math.floor(todayRwds.transactions[1].value*1000)/1000} and ${Math.floor(todayRwds.transactions[2].value*1000)/1000} AKA***._`);
               break;
             case isNaN(args[0]):
               msg.channel.send('Input the the number of nodes, like `!mnrewards 1`.');
@@ -123,7 +123,7 @@ client.on('message', msg => {
               msg.channel.send('Are you in debt my friend?! How have you arrived in this position in the crypto world?! How can you be in debt in a world without banks?! :thinking:');
               break;
             default:
-              msg.channel.send('**'+args[0]+'** masternode(s) will give you approximately **' + Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000 + ' AKA** _(***' + Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000 + '$***)_ per **day**.\n_The accumulated rewards are not included in this approximation.\nFor example the rewards for the last 3 days (with accumulated rewards) for one masternode were ***'+ Math.floor(todayRwds.transactions[0].value*1000)/1000 + ', ' + Math.floor(todayRwds.transactions[1].value*1000)/1000 + ' and ' + Math.floor(todayRwds.transactions[2].value*1000)/1000 + ' AKA***._');
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.\n_The accumulated rewards are not included in this approximation.\nFor example the rewards for the last 3 days (with accumulated rewards) for one masternode were ***${Math.floor(todayRwds.transactions[0].value*1000)/1000}, ${Math.floor(todayRwds.transactions[1].value*1000)/1000} and ${Math.floor(todayRwds.transactions[2].value*1000)/1000} AKA***._`);
               break;
             }
             });
@@ -131,9 +131,9 @@ client.on('message', msg => {
         case 'exchange':
           switch (cmd1){
           case undefined:
-            msg.channel.send('• **Stocks.Exchange** • <https://stocks.exchange/trade/AKA/BTC>\n• **Graviex** • <https://graviex.net/markets/akabtc>\n\nUse `!exchange stats` for additional info');
+            msg.channel.send('--`exchange stoc` | **Stocks.Exchange** • <https://stocks.exchange/trade/AKA/BTC>\n--`exchange grav` | **Graviex** • <https://graviex.net/markets/akabtc>\n\nUse `!exchange [EXCHANGE]` for additional info');
             break;
-          case 'stats':
+          case 'stoc':
             fetch('https://stocks.exchange/api2/ticker')
               .then(res => res.json())
               .then(json => { if (json[fix].market_name != 'AKA_BTC'){
@@ -143,8 +143,15 @@ client.on('message', msg => {
               msg.channel.send('\n• Last price:  **' + json[fix].last +' BTC**\n• 24h Change:  **' + Math.floor((json[fix].last-json[fix].lastDayAgo)/json[fix].lastDayAgo*1000000)/10000 + '%**\n• 24h Max Buy:  **' + json[fix].ask + ' BTC**\n• 24h Min Sell:  **' + json[fix].bid + ' BTC**\n• 24h Volume:  **' + Math.floor(json[fix].vol*1000)/1000 +' AKA** | **' + Math.floor(json[fix].vol*json[fix].last*1000)/1000 + ' BTC**\n');
               });
             break;
+          case 'grav':
+            fetch('https://graviex.net/api/v2/tickers/akabtc')
+              .then(res => res.json())
+              .then(json =>
+                msg.channel.send(`\n• Last price:  **${json.ticker.last} BTC**\n• 24h Change:  **${Math.floor(json.ticker.change*1000)/1000}%**\n• 24h Max Buy:  **${json.ticker.high} BTC**\n• 24h Min Sell:  **${json.ticker.low} BTC**\n• 24h Volume:  **${Math.floor(json.ticker.vol*1000)/1000} VTL** | **${Math.floor(json.ticker.volbtc*1000)/1000} BTC**\n`)
+              );
+            break;
           default:
-            msg.channel.send('Maybe you wanted to write `!exchange` or `!exchange stats`?');
+            msg.channel.send('Maybe you wanted to write `!exchange` or `!exchange [EXCHANGE]`?');
             break;}
           break;
         case 'akausd':
@@ -152,10 +159,10 @@ client.on('message', msg => {
             .then(res => res.json())
             .then (json => {switch(true) {
             case args[0]===undefined:
-              msg.channel.send('_Today the approximate price of ***1 AKA*** is ***' + json.usdRaw +'$*** and yesterday was ***' + json.usdDayAgoRaw + '$***._');
+              msg.channel.send(`_Today the approximate price of ***1 AKA*** is ***${json.usdRaw}$*** and yesterday was ***${json.usdDayAgoRaw}$***._`);
               break;
             case isNaN(args[0]):
-              msg.channel.send('_Today the approximate price of ***1 AKA*** is ***' + json.usdRaw +'$*** and yesterday was ***' + json.usdDayAgoRaw + '$***._');
+              msg.channel.send(`_Today the approximate price of ***1 AKA*** is ***${json.usdRaw}$*** and yesterday was ***${json.usdDayAgoRaw}$***._`);
               break;
             case args[0]==='0':
               msg.channel.send('Welcome young one! We have all started with **0 AKA** zilions of aeons ago!');
@@ -164,7 +171,7 @@ client.on('message', msg => {
               msg.channel.send('Hmm! Yup! I feel sorry for you! You owe **AKA**... I feel your pain friend!');
               break;
             default:
-              msg.channel.send('**' + args[0] +' AKA** = **' + json.usdRaw*args[0] + '$**\n _Today the approximate price of ***1 AKA*** is ***' + json.usdRaw +'$*** and yesterday was ***' + json.usdDayAgoRaw + '$***._');
+              msg.channel.send(`**${args[0]} AKA** = **${json.usdRaw*args[0]}$**\n _Today the approximate price of ***1 AKA*** is ***${json.usdRaw}$*** and yesterday was ***${json.usdDayAgoRaw}$***._`);
               break;
             }
             });
