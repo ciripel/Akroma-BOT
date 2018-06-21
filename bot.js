@@ -8,6 +8,7 @@ let todayRwds = {};
 let lrew_date = 1;
 let avgBT = 12;
 let usdRaw = 0.24;
+let stats = {};
 
 function timeConverter(UNIX_timestamp){
   let a = new Date(UNIX_timestamp * 1000);
@@ -35,13 +36,16 @@ client.on('message', msg => {
         args = args.splice(1);
         var cmd1 = args[0];
         switch(cmd) {
-        case 'diff':
-          fetch('http://aka.pool.sexy/api/stats')
+        case 'netinfo':
+          fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
-            .then (json => msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.`));
+            .then(json => stats=json);
+          fetch('http://akroma.minerpool.net/api/stats')
+            .then(res => res.json())
+            .then (json => msg.channel.send(`• Block Height• **${json.nodes[0].height}**\n• Avg Block Time• **${Math.floor(stats.avgBlocktime*100)/100} s**\n• Avg Network Hashrate• **${Math.floor(stats.avgHashrate/100000000)/10} GH/s**\n• Difficulty• **${Math.floor(json.nodes[0].difficulty/100000000)/100} Th**`));
           break;
         case 'help':
-          msg.channel.send('-- `!help` | This is your help.\n-- `!links` | Useful links.\n-- `!diff` | Current network difficulty.\n-- `!mninfo` | Dashboard info.\n-- `!hpow [your Mh/s]` | Approximate AKA per hour/day.\n-- `!mnrewards [no. of nodes]` | Approximate AKA reward per day.\n-- `!akausd [amount]` | Current price in USD.\n-- `!roadmap` | Link to Akroma Road-map.\n-- `!awesome` | Link to Awesome Akroma.\n-- `!exchange [EXCHANGE]` | Current Akroma exchanges [_exchange info_].\n-- `!pool [POOL]` | Akroma mining pools [_connection info_].\n-- `!about` | Info about this bot.');
+          msg.channel.send('-- `!help` | This is your help.\n-- `!links` | Useful links.\n-- `!netinfo` | Show current network stats.\n-- `!mninfo` | Dashboard info.\n-- `!hpow [your Mh/s]` | Approximate AKA per hour/day.\n-- `!mnrewards [no. of nodes]` | Approximate AKA reward per day.\n-- `!akausd [amount]` | Current price in USD.\n-- `!roadmap` | Link to Akroma Road-map.\n-- `!awesome` | Link to Awesome Akroma.\n-- `!exchange [EXCHANGE]` | Current Akroma exchanges [_exchange info_].\n-- `!pool [POOL]` | Akroma mining pools [_connection info_].\n-- `!epoch` - Akroma monetary policy\n-- `!about` | Info about this bot.');
           break;
         case 'members': if (msg.channel.type !== 'dm' && msg.member.roles.find('name', 'Core-Team')){
           msg.channel.send(`Number of members on Akroma Official Discord: **${msg.guild.memberCount}**`);}
@@ -56,7 +60,7 @@ client.on('message', msg => {
           msg.channel.send('• **Awesome Akroma** •\n<https://github.com/akroma-project/awesome-akroma/blob/master/README.md>');
           break;
         case 'about':
-          msg.channel.send('• Version 1.3\n• Author: ciripel _(Discord: Amitabha#0517)_\n• Source Code: <https://github.com/ciripel/Akroma-BOT>');
+          msg.channel.send('• Version 1.4\n• Author: ciripel _(Discord: Amitabha#0517)_\n• Source Code: <https://github.com/ciripel/Akroma-BOT>');
           break;
         case 'hpow':
           fetch('https://stats.akroma.io/akroma')
@@ -128,6 +132,15 @@ client.on('message', msg => {
             }
             });
           break;
+        case 'epoch':
+          fetch('https://stats.akroma.io/akroma')
+            .then(res => res.json())
+            .then(json => {switch(true) {
+            case json.height[json.height.length-1]<1200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]}**\n• Next epoch start block•  **1200000**\n• Epoch change in•  **${Math.floor((1200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 7.00 | 2.00 | 1.00 |  **10.00**  |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+            }
+            });
+          break;
         case 'exchange':
           switch (cmd1){
           case undefined:
@@ -171,7 +184,7 @@ client.on('message', msg => {
               msg.channel.send('Hmm! Yup! I feel sorry for you! You owe **AKA**... I feel your pain friend!');
               break;
             default:
-              msg.channel.send(`**${args[0]} AKA** = **${json.usdRaw*args[0]}$**\n _Today the approximate price of ***1 AKA*** is ***${json.usdRaw}$*** and yesterday was ***${json.usdDayAgoRaw}$***._`);
+              msg.channel.send(`**${args[0]} AKA** = **${json.usdRaw*args[0]}$**\n_Today the approximate price of ***1 AKA*** is ***${json.usdRaw}$*** and yesterday was ***${json.usdDayAgoRaw}$***._`);
               break;
             }
             });
