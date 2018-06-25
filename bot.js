@@ -4,7 +4,6 @@ const client = new Discord.Client();
 const auth = require('./auth.json');
 let fix = 0;
 let i = 0;
-let todayRwds = {};
 let lrew_date = 1;
 let avgBT = 12;
 let usdRaw = 0.24;
@@ -69,7 +68,7 @@ client.on('message', msg => {
           fetch('https://api.akroma.io/prices')
             .then(res => res.json())
             .then(json => usdRaw=json.usdRaw);
-          fetch('http://aka.pool.sexy/api/stats')
+          fetch('http://akroma.minerpool.net/api/stats')
             .then(res => res.json())
             .then (json => {switch (true) {
             case args[0]==='infinite':
@@ -97,17 +96,17 @@ client.on('message', msg => {
           fetch('http://api.akroma.io/addresses/0x848123468D05Aa670Da8b77ee3a6aB8b34aE33A3/transactions')
             .then(res => res.json())
             .then(json => lrew_date=json.transactions[0].timestamp);
+          fetch('https://stats.akroma.io/akroma')
+            .then(res => res.json())
+            .then(json => avgBT=json.avgBlocktime);
           fetch('https://akroma.io/api/network')
             .then(res => res.json())
-            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>`));
+            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• ROI •          **${Math.floor(365*3600000*24/avgBT*2/json.data.nodes/50)/1000}%**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>`));
           break;
         case 'mnrewards':
           fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
             .then(json => avgBT=json.avgBlocktime);
-          fetch('http://api.akroma.io/addresses/0x848123468D05Aa670Da8b77ee3a6aB8b34aE33A3/transactions')
-            .then(res => res.json())
-            .then(json => todayRwds=json);
           fetch('https://api.akroma.io/prices')
             .then(res => res.json())
             .then(json => usdRaw=json.usdRaw);
@@ -115,7 +114,7 @@ client.on('message', msg => {
             .then(res => res.json())
             .then (json => {switch (true) {
             case args[0]===undefined:
-              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.\n_The accumulated rewards are not included in this approximation.\nFor example the rewards for the last 3 days (with accumulated rewards) for one masternode were ***${Math.floor(todayRwds.transactions[0].value*1000)/1000}, ${Math.floor(todayRwds.transactions[1].value*1000)/1000} and ${Math.floor(todayRwds.transactions[2].value*1000)/1000} AKA***._`);
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
             case isNaN(args[0]):
               msg.channel.send('Input the the number of nodes, like `!mnrewards 1`.');
@@ -127,7 +126,7 @@ client.on('message', msg => {
               msg.channel.send('Are you in debt my friend?! How have you arrived in this position in the crypto world?! How can you be in debt in a world without banks?! :thinking:');
               break;
             default:
-              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.\n_The accumulated rewards are not included in this approximation.\nFor example the rewards for the last 3 days (with accumulated rewards) for one masternode were ***${Math.floor(todayRwds.transactions[0].value*1000)/1000}, ${Math.floor(todayRwds.transactions[1].value*1000)/1000} and ${Math.floor(todayRwds.transactions[2].value*1000)/1000} AKA***._`);
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
             }
             });
@@ -136,8 +135,21 @@ client.on('message', msg => {
           fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
             .then(json => {switch(true) {
-            case json.height[json.height.length-1]<1200000:
-              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **1200000**\n• Epoch change in•  **${Math.floor((1200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 7.00 | 2.00 | 1.00 |  **10.00**  |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+            case json.height[json.height.length-1]<=1200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **1200001**\n• Epoch change in•  **${Math.floor((1200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 7.00 | 2.00 | 1.00 |  **10.00**  |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 1200000<json.height[json.height.length-1]<=2200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **2200001**\n• Epoch change in•  **${Math.floor((2200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 6.00 | 2.25 | 0.75 |  **9.00**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 2200000<json.height[json.height.length-1]<=3200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **3200001**\n• Epoch change in•  **${Math.floor((3200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 5.50 | 2.50 | 0.65 |  **8.65**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 3200000<json.height[json.height.length-1]<=4200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **4200001**\n• Epoch change in•  **${Math.floor((4200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 5.00 | 2.60 | 0.55 |  **8.15**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 4200000<json.height[json.height.length-1]<=5200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **5200001**\n• Epoch change in•  **${Math.floor((5200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 4.50 | 2.50 | 0.45 |  **7.45**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
             }
             });
           break;
