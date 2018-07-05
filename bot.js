@@ -38,10 +38,12 @@ client.on('message', msg => {
         case 'netinfo':
           fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
-            .then(json => stats=json);
+            .then(json => stats=json)
+            .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
           fetch('http://akroma.minerpool.net/api/stats')
             .then(res => res.json())
-            .then (json => msg.channel.send(`• Block Height• **${json.nodes[0].height}**\n• Avg Block Time• **${Math.floor(stats.avgBlocktime*100)/100} s**\n• Avg Network Hashrate• **${Math.floor(stats.avgHashrate/100000000)/10} GH/s**\n• Difficulty• **${Math.floor(json.nodes[0].difficulty/100000000)/100} Th**`));
+            .then (json => msg.channel.send(`• Block Height• **${json.nodes[0].height}**\n• Avg Block Time• **${Math.floor(stats.avgBlocktime*100)/100} s**\n• Avg Network Hashrate• **${Math.floor(stats.avgHashrate/100000000)/10} GH/s**\n• Difficulty• **${Math.floor(json.nodes[0].difficulty/100000000)/100} Th**`))
+            .catch(error => console.log(`Can't connect to http://akroma.minerpool.net/api/stats.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'help':
           msg.channel.send('-- `!help` | This is your help.\n-- `!links` | Useful links.\n-- `!netinfo` | Show current network stats.\n-- `!mninfo` | Dashboard info.\n-- `!hpow [your Mh/s]` | Approximate AKA per hour/day.\n-- `!mnrewards [no. of nodes]` | Approximate AKA reward per day.\n-- `!akausd [amount]` | Current price in USD.\n-- `!roadmap` | Link to Akroma Road-map.\n-- `!awesome` | Link to Awesome Akroma.\n-- `!exchange [EXCHANGE]` | Current Akroma exchanges [_exchange info_].\n-- `!pool [POOL]` | Akroma mining pools [_connection info_].\n-- `!epoch` - Akroma monetary policy\n-- `!about` | Info about this bot.');
@@ -64,10 +66,12 @@ client.on('message', msg => {
         case 'hpow':
           fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
-            .then(json => avgBT=json.avgBlocktime);
+            .then(json => avgBT=json.avgBlocktime)
+            .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://api.akroma.io/prices')
             .then(res => res.json())
-            .then(json => usdRaw=json.usdRaw);
+            .then(json => usdRaw=json.usdRaw)
+            .catch(error => console.log(`Can't connect to https://api.akroma.io/prices.\nError: \n-----------\n${error}\n-----------`));
           fetch('http://akroma.minerpool.net/api/stats')
             .then(res => res.json())
             .then (json => {switch (true) {
@@ -90,26 +94,32 @@ client.on('message', msg => {
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
             }
-            });
+            })
+            .catch(error => console.log(`Can't connect to http://akroma.minerpool.net/api/stats.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'mninfo':
           fetch('http://api.akroma.io/addresses/0x848123468D05Aa670Da8b77ee3a6aB8b34aE33A3/transactions')
             .then(res => res.json())
-            .then(json => lrew_date=json.transactions[0].timestamp);
+            .then(json => lrew_date=json.transactions[0].timestamp)
+            .catch(error => console.log(`Can't connect to http://api.akroma.io/addresses/0x848123468D05Aa670Da8b77ee3a6aB8b34aE33A3/transactions.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
-            .then(json => avgBT=json.avgBlocktime);
+            .then(json => avgBT=json.avgBlocktime)
+            .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://akroma.io/api/network')
             .then(res => res.json())
-            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• ROI •          **${Math.floor(365*3600000*24/avgBT*2/json.data.nodes/50)/1000}%**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>`));
+            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• ROI •          **${Math.floor(365*3600000*24/avgBT*2/json.data.nodes/50)/1000}%**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>`))
+            .catch(error => console.log(`Can't connect to https://akroma.io/api/network'.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'mnrewards':
           fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
-            .then(json => avgBT=json.avgBlocktime);
+            .then(json => avgBT=json.avgBlocktime)
+            .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma'.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://api.akroma.io/prices')
             .then(res => res.json())
-            .then(json => usdRaw=json.usdRaw);
+            .then(json => usdRaw=json.usdRaw)
+            .catch(error => console.log(`Can't connect to https://api.akroma.io/prices'.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://akroma.io/api/network')
             .then(res => res.json())
             .then (json => {switch (true) {
@@ -129,7 +139,8 @@ client.on('message', msg => {
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
             }
-            });
+            })
+            .catch(error => console.log(`Can't connect to https://akroma.io/api/network'.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'epoch':
           fetch('https://stats.akroma.io/akroma')
@@ -150,30 +161,95 @@ client.on('message', msg => {
             case 4200000<json.height[json.height.length-1]<=5200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **5200001**\n• Epoch change in•  **${Math.floor((5200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 4.50 | 2.50 | 0.45 |  **7.45**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
+            case 5200000<json.height[json.height.length-1]<=6200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **6200001**\n• Epoch change in•  **${Math.floor((6200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 4.00 | 2.40 | 0.35 |  **6.75**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 6200000<json.height[json.height.length-1]<=7200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **7200001**\n• Epoch change in•  **${Math.floor((7200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.80 | 2.30 | 0.25 |  **6.35**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 7200000<json.height[json.height.length-1]<=8200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **8200001**\n• Epoch change in•  **${Math.floor((8200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.60 | 2.20 | 0.15 |  **5.95**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 8200000<json.height[json.height.length-1]<=9200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **9200001**\n• Epoch change in•  **${Math.floor((9200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.40 | 2.10 | 0.15 |  **5.65**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 9200000<json.height[json.height.length-1]<=10200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **10200001**\n• Epoch change in•  **${Math.floor((10200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.20 | 2.00 | 0.15 |  **5.35**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 10200000<json.height[json.height.length-1]<=11200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **11200001**\n• Epoch change in•  **${Math.floor((11200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.00 | 1.90 | 0.15 |  **5.05**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 11200000<json.height[json.height.length-1]<=12200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **12200001**\n• Epoch change in•  **${Math.floor((12200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.80 | 1.80 | 0.15 |  **4.75**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 12200000<json.height[json.height.length-1]<=13200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **13200001**\n• Epoch change in•  **${Math.floor((13200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.60 | 1.70 | 0.15 |  **4.45**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 13200000<json.height[json.height.length-1]<=14200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **14200001**\n• Epoch change in•  **${Math.floor((14200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.40 | 1.60 | 0.15 |  **4.15**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 14200000<json.height[json.height.length-1]<=15200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **15200001**\n• Epoch change in•  **${Math.floor((15200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.20 | 1.50 | 0.15 |  **3.85**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 15200000<json.height[json.height.length-1]<=16200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **16200001**\n• Epoch change in•  **${Math.floor((16200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.00 | 1.40 | 0.10 |  **3.50**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 16200000<json.height[json.height.length-1]<=17200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **17200001**\n• Epoch change in•  **${Math.floor((17200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.80 | 1.30 | 0.10 |  **3.20**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 17200000<json.height[json.height.length-1]<=18200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **18200001**\n• Epoch change in•  **${Math.floor((18200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.60 | 1.20 | 0.10 |  **2.90**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 18200000<json.height[json.height.length-1]<=19200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **19200001**\n• Epoch change in•  **${Math.floor((19200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.40 | 1.10 | 0.10 |  **2.60**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 19200000<json.height[json.height.length-1]<=20200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **20200001**\n• Epoch change in•  **${Math.floor((20200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.20 | 1.00 | 0.10 |  **2.30**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 20200000<json.height[json.height.length-1]<=21200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **21200001**\n• Epoch change in•  **${Math.floor((21200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.00 | 0.90 | 0.10 |  **2.00**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 21200000<json.height[json.height.length-1]<=22200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **22200001**\n• Epoch change in•  **${Math.floor((22200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.00 | 0.80 | 0.10 |  **1.90**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 22200000<json.height[json.height.length-1]:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• This is the last epoch •\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 0.08 | 0.60 | 0.05 |  **0.73**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
             }
-            });
+            })
+            .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma'.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'exchange':
           switch (cmd1){
           case undefined:
-            msg.channel.send('-- `exchange stoc` | **Stocks.Exchange** • <https://stocks.exchange/trade/AKA/BTC>\n-- `exchange grav` | **Graviex** • <https://graviex.net/markets/akabtc>\n\nUse `!exchange [EXCHANGE]` for additional info');
+            msg.channel.send('-- `exchange stoc` | **Stocks.Exchange** • <https://stocks.exchange/trade/AKA/BTC>\n-- `exchange grav` | **Graviex** • <https://graviex.net/markets/akabtc>\n-- `exchange bite` | **BiteBTC** • <https://bitebtc.com/trade/aka_btc>\n\nUse `!exchange [EXCHANGE]` for additional info');
             break;
           case 'stoc':
-            fetch('https://stocks.exchange/api2/ticker')
+            fetch('https://app.stocks.exchange/api2/ticker')
               .then(res => res.json())
               .then(json => { if (json[fix].market_name != 'AKA_BTC'){
                 for (i=0;i<json.length;i++){
                   if (json[i].market_name == 'AKA_BTC') {fix=i; break;}}
               }
               msg.channel.send('\n• Last price:  **' + json[fix].last +' BTC**\n• 24h Change:  **' + Math.floor((json[fix].last-json[fix].lastDayAgo)/json[fix].lastDayAgo*1000000)/10000 + '%**\n• 24h Max Buy:  **' + json[fix].ask + ' BTC**\n• 24h Min Sell:  **' + json[fix].bid + ' BTC**\n• 24h Volume:  **' + Math.floor(json[fix].vol*1000)/1000 +' AKA** | **' + Math.floor(json[fix].vol*json[fix].last*1000)/1000 + ' BTC**\n');
-              });
+              })
+              .catch(error => console.log(`Can't connect to https://app.stocks.exchange/api2/ticker'.\nError: \n-----------\n${error}\n-----------`));
             break;
           case 'grav':
             fetch('https://graviex.net/api/v2/tickers/akabtc')
               .then(res => res.json())
               .then(json =>
-                msg.channel.send(`\n• Last price:  **${json.ticker.last} BTC**\n• 24h Change:  **${Math.floor(json.ticker.change*1000)/1000}%**\n• 24h Max Buy:  **${json.ticker.high} BTC**\n• 24h Min Sell:  **${json.ticker.low} BTC**\n• 24h Volume:  **${Math.floor(json.ticker.vol*1000)/1000} VTL** | **${Math.floor(json.ticker.volbtc*1000)/1000} BTC**\n`)
-              );
+                msg.channel.send(`\n• Last price:  **${json.ticker.last} BTC**\n• 24h Change:  **${Math.floor(json.ticker.change*1000)/1000}%**\n• 24h Max Buy:  **${json.ticker.high} BTC**\n• 24h Min Sell:  **${json.ticker.low} BTC**\n• 24h Volume:  **${Math.floor(json.ticker.vol*1000)/1000} AKA** | **${Math.floor(json.ticker.volbtc*1000)/1000} BTC**\n`)
+              )
+              .catch(error => console.log(`Can't connect to https://graviex.net/api/v2/tickers/akabtc'.\nError: \n-----------\n${error}\n-----------`));
+            break;
+          case 'bite':
+            fetch('https://bitebtc.com/api/v1/ticker?market=aka_btc')
+              .then(res => res.json())
+              .then(json =>
+                msg.channel.send(`\n• Last price:  **${json.result.price} BTC**\n• 24h Change:  **${json.result.percent}%**\n• 24h Max Buy:  **${json.result.high} BTC**\n• 24h Min Sell:  **${json.result.low} BTC**\n• 24h Volume:  **${json.result.volume} AKA**\n`)
+              )
+              .catch(error => console.log(`Can't connect to https://bitebtc.com/api/v1/ticker?market=aka_btc'.\nError: \n-----------\n${error}\n-----------`));
             break;
           default:
             msg.channel.send('Maybe you wanted to write `!exchange` or `!exchange [EXCHANGE]`?');
@@ -199,12 +275,13 @@ client.on('message', msg => {
               msg.channel.send(`**${args[0]} AKA** = **${json.usdRaw*args[0]}$**\n_Today the approximate price of ***1 AKA*** is ***${json.usdRaw}$*** and yesterday was ***${json.usdDayAgoRaw}$***._`);
               break;
             }
-            });
+            })
+            .catch(error => console.log(`Can't connect to https://api.akroma.io/prices'.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'pool':
           switch (cmd1){
           case undefined:
-            msg.channel.send('-- `!pool comi` | Comining.io <https://comining.io/>\n-- `!pool vipo` | Vipool <http://aka.vipool.net/>\n-- `!pool mine` | Minerpool.net <http://akroma.minerpool.net/>\n-- `!pool cryp` | Cryptopools.info <https://akroma.cryptopools.info/>\n-- `!pool akro` | Mining.Akroma <http://mining.akroma.org/>\n-- `!pool clon` | Clona <http://clona.ru/>\n-- `!pool peon` | MiningPeon <http://aka.miningpeon.net/>\n-- `!pool glob` | EncryptGlobe <https://aka.encryptglobe.com/>\n-- `!pool afun` | MiningPool.fun <http://akroma.miningpool.fun/>\n-- `!pool warl` | CryptoWarlords <http://akroma.cryptowarlords.net/>\n-- `!pool aika` | AikaPool <https://aikapool.com/>\n-- `!pool sexy` | Pool Sexy <http://aka.pool.sexy/>\n-- `!pool hash` | Hash.com.hr <http://akroma.hash.com.hr/>\n-- `!pool fair` | FairPool <http://aka.fairpool.xyz/>\n-- `!pool 2mnr` | 2Miners <https://2miners.com/aka-mining-pool>\n-- `!pool ucry` | uCrypto <https://ucrypto.net/pools/>\n-- `!pool chil` | Chileminers <http://akroma.chileminers.cl/>\n\nUse `!pool [POOL]` for specific mining details\n_Please spread the hashpower across all pools._');
+            msg.channel.send('-- `!pool comi` | Comining.io <https://comining.io/>\n-- `!pool vipo` | Vipool <http://aka.vipool.net/>\n-- `!pool mine` | Minerpool.net <http://akroma.minerpool.net/>\n-- `!pool cryp` | Cryptopools.info <https://akroma.cryptopools.info/>\n-- `!pool akro` | Mining.Akroma <http://mining.akroma.org/>\n-- `!pool clon` | Clona <http://clona.ru/>\n-- `!pool peon` | MiningPeon <http://aka.miningpeon.net/>\n-- `!pool sign` | Signal2noi <http://aka.signal2noi.se/>\n-- `!pool afun` | MiningPool.fun <http://akroma.miningpool.fun/>\n-- `!pool warl` | CryptoWarlords <http://akroma.cryptowarlords.net/>\n-- `!pool aika` | AikaPool <https://aikapool.com/>\n-- `!pool sexy` | Pool Sexy <http://aka.pool.sexy/>\n-- `!pool hash` | Hash.com.hr <http://akroma.hash.com.hr/>\n-- `!pool fair` | FairPool <http://aka.fairpool.xyz/>\n-- `!pool 2mnr` | 2Miners <https://2miners.com/aka-mining-pool>\n-- `!pool ucry` | uCrypto <https://ucrypto.net/pools/>\n-- `!pool chil` | Chileminers <http://akroma.chileminers.cl/>\n-- `!pool solo` | SoloPool <https://aka.solopool.org/>\n-- `!pool bylt` | Bylt.gq <https://akroma.bylt.gq/>\n-- `!pool pfun` | Poolfun.ru <http://poolfun.ru/>\n\nUse `!pool [POOL]` for specific mining details\n_Please spread the hashpower across all pools._');
             break;
           case 'comi':
             msg.channel.send('```prolog\nComining Pool connection info.```\nWebsite: <https://comining.io/>\nDefault port: `9999`\nRusia server: `s-ru.comining.io`\nEU server: `s-eu.comining.io`\nUS server: `s-us.comining.io`\nSingapore server: `s-sg.comining.io`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```ethdcrminer64 -epool s.comining.io:9999 -ewal [ACCOUNT].[WORKER] -epsw x -esm 3 -allcoins 1\nethminer -U -SP 2 -S s.comining.io:9999 -O [ACCOUNT].[WORKER] -RH --farm-recheck 5000 --work-timeout 1000\nPhoenixMiner -pool s.comining.io:9999 -wal [ACCOUNT].[WORKER] -pass x -log 0 -proto 4 -coin akroma```');
@@ -227,8 +304,8 @@ client.on('message', msg => {
           case 'peon':
             msg.channel.send('```prolog\nMiningPeon connection info.```\nWebsite: <http://aka.miningpeon.net/>\nDefault port: `8008`\nDefault server: `aka.miningpeon.net`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```ethdcrminer64 -epool aka.miningpeon.net:8008 -ewal [ADDRESS].[WORKER] -epsw x -mode 1 -allcoins 1\nPhoenixMiner -pool aka.miningpeon.net:8008 -wal [ADDRESS].[WORKER] -pass x -log 0 -coin akroma```');
             break;
-          case 'glob':
-            msg.channel.send('```prolog\nEncriptGlobe Pool connection info.```\nWebsite: <https://aka.encryptglobe.com/>\nLow difficulty (<300Mh/s): `8002`\nMedium difficulty (300-600Mh/s): `8004`\nHigh difficulty/nicehash (>600Mh/s): `8009`\nDefault server: `aka-stratum.encryptglobe.com`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool aka-stratum.encryptglobe.com:8002 -ewal (your wallet address) -epsw x -allpools 1 -allcoins exp -gser 2 -eworker RigName\nethminer.exe --cl-global-work 8192 --farm-recheck 200 -G -S aka-stratum.encryptglobe.com:8002 -SP 1 -O (your wallet address).RigName\neminer.exe -S aka-stratum.encryptglobe.com:8002 -U (your wallet address) -P x --cloud-key (your cloud key) -intensity 48 -N (your rig name)```');
+          case 'sign':
+            msg.channel.send('```prolog\nSignal2noi Pool connection info.```\nWebsite: <http://aka.signal2noi.se/>\nDefault port: `8008`\nDefault server: `aka.signal2noi.se`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```ethdcrminer64 -epool aka.signal2noi.se:8008 -ewal [ADDRESS].[WORKER] -epsw x -mode 1 -allcoins 1\nPhoenixMiner -pool aka.signal2noi.se:8008 -wal [ADDRESS].[WORKER] -pass x -log 0 -coin akroma```');
             break;
           case 'afun':
             msg.channel.send('```prolog\nMiningPool connection info.```\nWebsite: <http://akroma.miningpool.fun/>\nDefault port: `9016`\nDefault server: `akroma.miningpool.fun`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```ethdcrminer64 -epool akroma.miningpool.fun:9016 -ewal [ADDRESS].[WORKER] -epsw x -mode 1 -allcoins 1\nPhoenixMiner -pool akroma.miningpool.fun:9016 -wal [ADDRESS].[WORKER] -pass x -log 0 -coin akroma```');
@@ -256,6 +333,15 @@ client.on('message', msg => {
             break;
           case 'chil':
             msg.channel.send('```prolog\nChileminers Pool connection info.```\nWebsite: <http://akroma.chileminers.cl/>\nLow difficulty (<200Mh/s): `8007`\nMedium difficulty (200-800Mh/s): `8008`\nHigh difficulty/nicehash (>800Mh/s): `8009`\nDefault server: `akroma.chileminers.cl`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool stratum+tcp://akroma.chileminers.cl:8008 -ewal <address> -epsw x -allpools 1 -allcoins exp -gser 2 -eworker <rigname>\nethminer.exe --farm-recheck 200 -G -S akroma.chileminers.cl:8008 -SP 1 -O <address>.<rigname>```');
+            break;
+          case 'solo':
+            msg.channel.send('```prolog\nSoloPool connection info.```\nWebsite: <https://aka.solopool.org/>\nDefault port: `8013`\nDefault server: `s2.solopool.org`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -allcoins 1 -epool s2.solopool.org:8013 -ewal [ADDRESS] -epsw x -eworker [RIG_ID]```');
+            break;
+          case 'bylt':
+            msg.channel.send('```prolog\nBylt.Gq Pool connection info.```\nWebsite: <https://akroma.bylt.gq/>\nDefault port: `8008`\nDefault server: `akroma.bylt.gq`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool akroma.bylt.gq:8008 -esm 0 -ewal <address> -eworker <worker> -allcoins 1 -allpools 1```');
+            break;
+          case 'pfun':
+            msg.channel.send('```prolog\nPoolfun.Ru connection info.```\nWebsite: <http://poolfun.ru/>\nLow difficulty (<100Mh/s): `4092`\nMedium difficulty(100-200Mh/s): `4094`\nHigh difficulty (>200Mh/s): `4096`\nNicehash: `4098`\nDefault server: `aka.poolfun.ru`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool aka.poolfun.ru:4092 -ewal <wallet_address> -epsw x -eworker <rig_name> -allcoins 1```');
             break;
           default:
             msg.channel.send('Unrecognized pool. Please check again.');
