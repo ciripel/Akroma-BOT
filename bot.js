@@ -23,6 +23,22 @@ function timeConverter(UNIX_timestamp){
 }
 
 client.on('ready', () => {
+  fetch('http://api.akroma.io/addresses/0x848123468D05Aa670Da8b77ee3a6aB8b34aE33A3/transactions')
+    .then(res => res.json())
+    .then(json => lrew_date=json.transactions[0].timestamp)
+    .catch(error => console.log(`Can't connect to http://api.akroma.io/addresses/0x848123468D05Aa670Da8b77ee3a6aB8b34aE33A3/transactions.\nError: \n-----------\n${error}\n-----------`));
+  fetch('https://stats.akroma.io/akroma')
+    .then(res => res.json())
+    .then(json => avgBT=json.avgBlocktime)
+    .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
+  fetch('https://api.akroma.io/prices')
+    .then(res => res.json())
+    .then(json => usdRaw=json.usdRaw)
+    .catch(error => console.log(`Can't connect to https://api.akroma.io/prices.\nError: \n-----------\n${error}\n-----------`));
+  fetch('https://stats.akroma.io/akroma')
+    .then(res => res.json())
+    .then(json => stats=json)
+    .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
