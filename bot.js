@@ -42,6 +42,17 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
+client.on('error', (e) => console.log(`Error on ready ...${e}`));
+
+client.on('reconnecting',() =>
+  console.log(`Bot ${client.user.tag} reconected!`));
+
+client.on('disconnect',() => {
+  console.log(`Bot ${client.user.tag} disconnected ... Attempted reconnecting... `);
+  client.login(auth.token)
+    .catch(error => console.log(`Can't login into discord due to ${error}`));
+});
+
 client.on('message', msg => {
   if (msg.content.substring(0, 1) === '!') {
     if (msg.webhookID === null) {
@@ -372,4 +383,5 @@ client.on('message', msg => {
   }
 });
 
-client.login(auth.token);
+client.login(auth.token)
+  .catch(error => console.log(`Can't login into discord due to ${error}`));
