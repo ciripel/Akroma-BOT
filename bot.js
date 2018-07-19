@@ -118,7 +118,7 @@ client.on('message', msg => {
               msg.channel.send('You deffinatly have reached something umbelievable! Nobody have **unmined** anything till now! Do not forget to register the tech! :joy:');
               break;
             default:
-              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*6/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*6*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
             }
             })
@@ -135,7 +135,7 @@ client.on('message', msg => {
             .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://akroma.io/api/network')
             .then(res => res.json())
-            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• ROI •          **${Math.floor(365*3600000*24/avgBT*2/json.data.nodes/50)/1000}%**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>`))
+            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• ROI •          **${Math.floor(365*3600000*24/avgBT*2.25/json.data.nodes/50)/1000}%**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>`))
             .catch(error => console.log(`Can't connect to https://akroma.io/api/network'.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'mnrewards':
@@ -151,7 +151,7 @@ client.on('message', msg => {
             .then(res => res.json())
             .then (json => {switch (true) {
             case args[0]===undefined:
-              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
             case isNaN(args[0]):
               msg.channel.send('Input the the number of nodes, like `!mnrewards 1`.');
@@ -163,7 +163,7 @@ client.on('message', msg => {
               msg.channel.send('Are you in debt my friend?! How have you arrived in this position in the crypto world?! How can you be in debt in a world without banks?! :thinking:');
               break;
             default:
-              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
             }
             })
