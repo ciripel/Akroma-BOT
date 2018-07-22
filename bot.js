@@ -308,7 +308,7 @@ client.on('message', msg => {
         case 'pool':
           switch (cmd1){
           case undefined:
-            msg.channel.send('-- `!pool comi` | Comining.io <https://comining.io/>\n-- `!pool vipo` | Vipool <http://aka.vipool.net/>\n-- `!pool mine` | Minerpool.net <http://akroma.minerpool.net/>\n-- `!pool cryp` | Cryptopools.info <https://akroma.cryptopools.info/>\n-- `!pool akro` | Mining.Akroma <http://mining.akroma.org/>\n-- `!pool clon` | Clona <http://clona.ru/>\n-- `!pool peon` | MiningPeon <http://aka.miningpeon.net/>\n-- `!pool sign` | Signal2noi <http://aka.signal2noi.se/>\n-- `!pool afun` | MiningPool.fun <http://akroma.miningpool.fun/>\n-- `!pool warl` | CryptoWarlords <http://akroma.cryptowarlords.net/>\n-- `!pool aika` | AikaPool <https://aikapool.com/>\n-- `!pool sexy` | Pool Sexy <http://aka.pool.sexy/>\n-- `!pool hash` | Hash.com.hr <http://akroma.hash.com.hr/>\n-- `!pool fair` | FairPool <http://aka.fairpool.xyz/>\n-- `!pool 2mnr` | 2Miners <https://2miners.com/aka-mining-pool>\n-- `!pool ucry` | uCrypto <https://ucrypto.net/pools/>\n-- `!pool chil` | Chileminers <http://akroma.chileminers.cl/>\n-- `!pool solo` | SoloPool <https://aka.solopool.org/>\n-- `!pool bylt` | Bylt.gq <https://akroma.bylt.gq/>\n-- `!pool pfun` | Poolfun.ru <http://poolfun.ru/>\n\nUse `!pool [POOL]` for specific mining details\n_Please spread the hashpower across all pools._');
+            msg.channel.send('-- `!pool comi` | Comining.io <https://comining.io/>\n-- `!pool vipo` | Vipool <http://aka.vipool.net/>\n-- `!pool mine` | Minerpool.net <http://akroma.minerpool.net/>\n-- `!pool cryp` | Cryptopools.info <https://akroma.cryptopools.info/>\n-- `!pool akro` | Mining.Akroma <http://mining.akroma.org/>\n-- `!pool clon` | Clona <http://clona.ru/>\n-- `!pool sign` | Signal2noi <http://aka.signal2noi.se/>\n-- `!pool afun` | MiningPool.fun <http://akroma.miningpool.fun/>\n-- `!pool warl` | CryptoWarlords <http://akroma.cryptowarlords.net/>\n-- `!pool aika` | AikaPool <https://aikapool.com/>\n-- `!pool sexy` | Pool Sexy <http://aka.pool.sexy/>\n-- `!pool fair` | FairPool <http://aka.fairpool.xyz/>\n-- `!pool 2mnr` | 2Miners <https://2miners.com/aka-mining-pool>\n-- `!pool solo` | SoloPool <https://aka.solopool.org/>\n-- `!pool bylt` | Bylt.gq <https://akroma.bylt.gq/>\n-- `!pool pfun` | Poolfun.ru <http://poolfun.ru/>\n-- `!pool unit` | Unitystreams Akroma Pool <https://akromapool.unitystreams.com/>\n-- `!pool cube` | CubePool <https://akroma.cubepool.eu/>\n\nUse `!pool [POOL]` for specific mining details\n_Please spread the hashpower across all pools._');
             break;
           case 'comi':
             msg.channel.send('```prolog\nComining Pool connection info.```\nWebsite: <https://comining.io/>\nDefault port: `9999`\nRusia server: `s-ru.comining.io`\nEU server: `s-eu.comining.io`\nUS server: `s-us.comining.io`\nSingapore server: `s-sg.comining.io`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```ethdcrminer64 -epool s.comining.io:9999 -ewal [ACCOUNT].[WORKER] -epsw x -esm 3 -allcoins 1\nethminer -U -SP 2 -S s.comining.io:9999 -O [ACCOUNT].[WORKER] -RH --farm-recheck 5000 --work-timeout 1000\nPhoenixMiner -pool s.comining.io:9999 -wal [ACCOUNT].[WORKER] -pass x -log 0 -proto 4 -coin akroma```');
@@ -328,9 +328,6 @@ client.on('message', msg => {
           case 'clon':
             msg.channel.send('```prolog\nClona Solo connection info.```\nWebsite: <http://clona.ru/>\nLow difficulty: `9022`\nHigh difficulty/nicehash: `9021`\nDefault server: `aka.clona.ru`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64 -epool stratum+tcp://aka.clona.ru:9022 -ewal [ADDRESS] -eworker [WORKER] -epsw x -mode 1 -allcoins 1\nethminer.exe -G -S aka.clona.ru:9022 -O [ADDRESS].[WORKER] -SP 1 ```');
             break;
-          case 'peon':
-            msg.channel.send('```prolog\nMiningPeon connection info.```\nWebsite: <http://aka.miningpeon.net/>\nDefault port: `8008`\nDefault server: `aka.miningpeon.net`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```ethdcrminer64 -epool aka.miningpeon.net:8008 -ewal [ADDRESS].[WORKER] -epsw x -mode 1 -allcoins 1\nPhoenixMiner -pool aka.miningpeon.net:8008 -wal [ADDRESS].[WORKER] -pass x -log 0 -coin akroma```');
-            break;
           case 'sign':
             msg.channel.send('```prolog\nSignal2noi Pool connection info.```\nWebsite: <http://aka.signal2noi.se/>\nDefault port: `8008`\nDefault server: `aka.signal2noi.se`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```ethdcrminer64 -epool aka.signal2noi.se:8008 -ewal [ADDRESS].[WORKER] -epsw x -mode 1 -allcoins 1\nPhoenixMiner -pool aka.signal2noi.se:8008 -wal [ADDRESS].[WORKER] -pass x -log 0 -coin akroma```');
             break;
@@ -346,20 +343,11 @@ client.on('message', msg => {
           case 'sexy':
             msg.channel.send('```prolog\nPool Sexy connection info.```\nWebsite: <http://aka.pool.sexy/>\nDefault port: `20022`\nDefault server: `aka.pool.sexy`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```ethdcrminer64 -epool aka.pool.sexy:20022 -ewal <ADDRESS>.<WORKER> -epsw x -mode 1 -allcoins 1\nPhoenixMiner -pool aka.pool.sexy:20022 -wal <ADDRESS>.<WORKER> -pass x -log 0 -coin akroma```');
             break;
-          case 'hash':
-            msg.channel.send('```prolog\nHash.Com.Hr Pool connection info.```\nWebsite: <http://akroma.hash.com.hr/>\nDefault port: `6008`\nDefault server: `akroma.hash.com.hr`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool stratum+tcp://akroma.hash.com.hr:6008 -ewal YOUR_WALLET_ADRESS -epsw x -allpools 1 -allcoins exp -gser 2 -eworker RIG_NAME\neminer.exe -S akroma.hash.com.hr:6008 -U WALLETID -N RIGNAME -P x --cloud-key CLOUDKEY -intensity 48\nethminer.exe --farm-recheck 200 -G -S akroma.hash.com.hr:6008 -SP 1 -O YOUR_WALLET_ADRESS.RIG_NAME```');
-            break;
           case 'fair':
             msg.channel.send('```prolog\nFairPool connection info.```\nWebsite: <https://aka.fairpool.xyz/>\nDefault port: `2222`\nDefault server: `mine.aka.fairpool.xyz`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```ethminer.exe -S mine.aka.fairpool.xyz:2222 -O <YOUR_AKA_ADDRESS>+<WORKER_NAME>:x -SC 1 -SP 2 -U\nsgminer -k ethash -o stratum+tcp://mine.aka.fairpool.xyz:2222 -u <YOUR_AKA_ADDRESS>.<WORKER_NAME> -p x -X 1024 -w 192 -g 1\nEthDcrMiner64.exe -epool mine.aka.fairpool.xyz:2222 -ewal <YOUR_AKA_ADDRESS>.<WORKER_NAME> -epsw x -esm 3 -allcoins 1```');
             break;
           case '2mnr':
             msg.channel.send('```prolog\n2Miners Pool connection info.```\nWebsite: <https://2miners.com/aka-mining-pool>\nDefault port: `5050`\nDefault server: `aka.2miners.com`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool aka.2miners.com:5050 -allcoins etc -allpools 0 -eworker RIG_ID -ewal YOUR_ADDRESS -epsw x```');
-            break;
-          case 'ucry':
-            msg.channel.send('```prolog\nUCrypto Pool connection info.```\nWebsite: <https://ucrypto.net/pools/>\nLow difficulty: `8008`\nHigh difficulty/nicehash: `8009`\nDefault server: `aka-pool.ucrypto.net`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool stratum+tcp://aka-pool.ucrypto.net:8008 -ewal <your_address> -epsw x -allpools 1 -allcoins 1 -gser 2 -eworker <rig_name>```');
-            break;
-          case 'chil':
-            msg.channel.send('```prolog\nChileminers Pool connection info.```\nWebsite: <http://akroma.chileminers.cl/>\nLow difficulty (<200Mh/s): `8007`\nMedium difficulty (200-800Mh/s): `8008`\nHigh difficulty/nicehash (>800Mh/s): `8009`\nDefault server: `akroma.chileminers.cl`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool stratum+tcp://akroma.chileminers.cl:8008 -ewal <address> -epsw x -allpools 1 -allcoins exp -gser 2 -eworker <rigname>\nethminer.exe --farm-recheck 200 -G -S akroma.chileminers.cl:8008 -SP 1 -O <address>.<rigname>```');
             break;
           case 'solo':
             msg.channel.send('```prolog\nSoloPool connection info.```\nWebsite: <https://aka.solopool.org/>\nDefault port: `8013`\nDefault server: `s2.solopool.org`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -allcoins 1 -epool s2.solopool.org:8013 -ewal [ADDRESS] -epsw x -eworker [RIG_ID]```');
@@ -369,6 +357,12 @@ client.on('message', msg => {
             break;
           case 'pfun':
             msg.channel.send('```prolog\nPoolfun.Ru connection info.```\nWebsite: <http://poolfun.ru/>\nLow difficulty (<100Mh/s): `4092`\nMedium difficulty(100-200Mh/s): `4094`\nHigh difficulty (>200Mh/s): `4096`\nNicehash: `4098`\nDefault server: `aka.poolfun.ru`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool aka.poolfun.ru:4092 -ewal <wallet_address> -epsw x -eworker <rig_name> -allcoins 1```');
+            break;
+          case 'unit':
+            msg.channel.send('```prolog\nUnitySteams Akroma Pool connection info.```\nWebsite: <https://akromapool.unitystreams.com/>\nHigh difficulty (150-300Mh/s): `16008`\nMedium difficulty (60-100Mh/s): `16007`\nLow difficulty (<60Mh/s): `16010`\nMedium nicehash (100-800Mh/s): `16004`\nHigh nicehash (>800Mh/s): `16009`\nDefault server: `server2.unitystreams.com`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```Pheonixminer.exe -pool server2.unitystreams.com:16008 -wal <address> -amd -clNew 1\nEthDcrMiner64.exe -epool stratum+tcp://server2.unitystreams.com:16008 -wal <address> -eworker <your_rig> -allcoins 1```');
+            break;
+          case 'cube':
+            msg.channel.send('```prolog\nCubePool connection info.```\nWebsite: <https://akroma.cubepool.eu/>\nLow difficulty (2b): `7002`\nMedium difficulty (4b): `7004`\nHigh difficulty/nicehash (8b): `7008`\nDefault server: `akroma.cubepool.eu`\n\nTo mine Akroma u can use any Ethash miner.\n**Examples:**\n```EthDcrMiner64.exe -epool stratum+tcp://akroma.cubepool.eu:7002 -ewal YOUR_WALLET_ADDRESS -epsw x -allpools 1 -esm 0 -mport 0 -eworker YOUR_WORKER_NAME\nPhoenixMiner.exe -pool stratum+tcp://akroma.cubepool.eu:7004 -wal YOUR_WALLET_ADDRESS -pass x -worker YOUR_WORKER_NAME```');
             break;
           default:
             msg.channel.send('Unrecognized pool. Please check again.');
