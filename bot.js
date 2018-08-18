@@ -373,7 +373,7 @@ client.on('message', msg => {
           break;
         }
       }
-      else msg.channel.send('Beep beep... oooh a young one! Please try to speak with me in #akroma-bot channel or you can wisper me your secrets...');
+      else msg.channel.send(`Beep beep... oooh a young one! Please try to speak with me in ${'<#440132389986107392>'} channel or you can wisper me your secrets...`);
     }
   }
 });
