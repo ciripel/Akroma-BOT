@@ -79,7 +79,7 @@ client.on('message', msg => {
           msg.channel.send(`Number of members on Akroma Official Discord: **${msg.guild.memberCount}**`);}
           break;
         case 'links':
-          msg.channel.send('**Akroma Website** • <https://akroma.io/>\n**Akroma Announcement** • <https://bitcointalk.org/index.php?topic=2844280>\n**Akroma Whitepaper** • <http://bit.ly/2EMQ4E4>\n**Akroma Github** • <https://github.com/akroma-project/>\n**Akroma Wallets** • <https://wallet.akroma.io/> <https://play.google.com/store/apps/details?id=com.wallet.crypto.akroma&hl=en> <https://chrome.google.com/webstore/detail/akroma/gghgmpjmebiapnjjpgakibnpklhbnkof>\n**Akroma Block Explorer** • <https://akroma.io/explorer>\n**Akroma Community** • <https://medium.com/akroma> <https://twitter.com/akroma_io/> <https://www.facebook.com/AkromaIO/> <https://instagram.com/akroma.io>');
+          msg.channel.send('**Akroma Website** • <https://akroma.io/>\n**Akroma Announcement** • <https://bitcointalk.org/index.php?topic=2844280>\n**Akroma Whitepaper** • <http://bit.ly/2EMQ4E4>\n**Akroma wiki** • <https://docs.akroma.io/>\n**Akroma Github** • <https://github.com/akroma-project/>\n**Akroma Wallets** • <https://wallet.akroma.io/> <https://play.google.com/store/apps/details?id=com.wallet.crypto.akroma&hl=en> <https://chrome.google.com/webstore/detail/akroma/gghgmpjmebiapnjjpgakibnpklhbnkof>\n**Akroma Block Explorer** • <https://akroma.io/explorer>\n**Akroma Community** • <https://medium.com/akroma> <https://t.me/akroma_official> <https://twitter.com/akroma_io/> <https://www.facebook.com/AkromaIO/> <https://instagram.com/akroma.io>');
           break;
         case 'roadmap':
           msg.channel.send('• **Akroma Road-map** •\n<https://medium.com/akroma/akroma-road-map-q2-2018-ee616bb2d5f8>');
@@ -135,7 +135,7 @@ client.on('message', msg => {
             .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://akroma.io/api/network')
             .then(res => res.json())
-            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• ROI •          **${Math.floor(365*3600000*24/avgBT*2.25/json.data.nodes/50)/1000}%**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://github.com/akroma-project/akroma-masternode-management/wiki>`))
+            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• ROI •          **${Math.floor(365*3600000*24/avgBT*2.25/json.data.nodes/50)/1000}%**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://docs.akroma.io/masternodes/operating-systems/installation-on-linux>`))
             .catch(error => console.log(`Can't connect to https://akroma.io/api/network'.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'mnrewards':
@@ -249,7 +249,7 @@ client.on('message', msg => {
         case 'exchange':
           switch (cmd1){
           case undefined:
-            msg.channel.send('-- `exchange stoc` | **Stocks.Exchange** • <https://stocks.exchange/trade/AKA/BTC>\n-- `exchange grav` | **Graviex** • <https://graviex.net/markets/akabtc>\n-- `exchange bite` | **BiteBTC** • <https://bitebtc.com/trade/aka_btc>\n\nUse `!exchange [EXCHANGE]` for additional info');
+            msg.channel.send('-- `exchange stoc` | **Stocks.Exchange** • <https://app.stocks.exchange/en/basic-trade/pair/BTC/AKA/1D>\n-- `exchange grav` | **Graviex** • <https://graviex.net/markets/akabtc>\n-- `exchange bite` | **BiteBTC** • <https://bitebtc.com/trade/aka_btc>\n\nUse `!exchange [EXCHANGE]` for additional info');
             break;
           case 'stoc':
             fetch('https://app.stocks.exchange/api2/ticker')
@@ -373,6 +373,7 @@ client.on('message', msg => {
           break;
         }
       }
+      else msg.channel.send('Beep beep... oooh a young one! Please try to speak with me in #akroma-bot channel or you can wisper me your secrets...');
     }
   }
 });
