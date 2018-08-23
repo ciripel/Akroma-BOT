@@ -2,6 +2,16 @@
 
 ### Discord bot for Akroma Official
 
+v.1.4 - deloyed 21.06.2018
+- replaced !diff with !netinfo command
+- added !epoch command
+- added BiteBTC exchange
+- updated mining pools list
+- introduced RAII for variables
+- implemented error handlers and auto reconnect
+- bot reply if called in unauthorized channel and direct user to correct channel
+
+
 v.1.3 - deloyed 08.05.2018
 - allows @Core Team, @Moderator and @Bot Developer to call the bot in all channels
 - added !roadmap command
