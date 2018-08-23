@@ -6,8 +6,11 @@ let fix = 0;
 let i = 0;
 let lrew_date = 1;
 let avgBT = 12;
+let last_blk = 1000000;
 let usdRaw = 0.24;
 let stats = {};
+let cmc_btc = {};
+let nodes_stats = {};
 
 function timeConverter(UNIX_timestamp){
   let a = new Date(UNIX_timestamp * 1000);
@@ -29,7 +32,10 @@ client.on('ready', () => {
     .catch(error => console.log(`Can't connect to http://api.akroma.io/addresses/0x848123468D05Aa670Da8b77ee3a6aB8b34aE33A3/transactions.\nError: \n-----------\n${error}\n-----------`));
   fetch('https://stats.akroma.io/akroma')
     .then(res => res.json())
-    .then(json => avgBT=json.avgBlocktime)
+    .then(json => {
+      avgBT=json.avgBlocktime;
+      last_blk=json.height[json.height.length-1];
+    })
     .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
   fetch('https://api.akroma.io/prices')
     .then(res => res.json())
@@ -40,6 +46,14 @@ client.on('ready', () => {
     .then(json => stats=json)
     .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
   console.log(`Logged in as ${client.user.tag}!`);
+  fetch('https://api.coinmarketcap.com/v2/ticker/1/')
+    .then(res => res.json())
+    .then(json => cmc_btc = json)
+    .catch(error => console.log(`Can't connect to https://api.coinmarketcap.com/v2/ticker/1/.\nError: \n-----------\n${error}\n-----------`));
+  fetch('https://akroma.io/api/network')
+    .then(res => res.json())
+    .then(json => nodes_stats = json)
+    .catch(error => console.log(`Can't connect to https://akroma.io/api/network.\nError: \n-----------\n${error}\n-----------`));
 });
 
 client.on('error', (e) => console.log(`Error on ready ...${e}`));
@@ -88,12 +102,15 @@ client.on('message', msg => {
           msg.channel.send('• **Awesome Akroma** •\n<https://github.com/akroma-project/awesome-akroma/blob/master/README.md>');
           break;
         case 'about':
-          msg.channel.send('• Version 1.4\n• Author: ciripel _(Discord: Amitabha#0517)_\n• Source Code: <https://github.com/ciripel/Akroma-BOT>');
+          msg.channel.send('• Version 1.5\n• Author: ciripel _(Discord: Amitabha#0517)_\n• Source Code: <https://github.com/ciripel/Akroma-BOT>');
           break;
         case 'hpow':
           fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
-            .then(json => avgBT=json.avgBlocktime)
+            .then(json => {
+              avgBT=json.avgBlocktime;
+              last_blk=json.height[json.height.length-1];
+            })
             .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://api.akroma.io/prices')
             .then(res => res.json())
@@ -117,11 +134,80 @@ client.on('message', msg => {
             case args[0]<0:
               msg.channel.send('You deffinatly have reached something umbelievable! Nobody have **unmined** anything till now! Do not forget to register the tech! :joy:');
               break;
-            default:
+            default: {switch(true) {
+            case last_blk<=300000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*9/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*9/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*9/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*9*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 300000<last_blk<=1200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 1200000<last_blk<=2200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*6/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*6*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            }
-            })
+            case 2200000<last_blk<=3200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5.5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5.5/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*5.5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5.5*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 3200000<last_blk<=4200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 4200000<last_blk<=5200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4.5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4.5/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*4.5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4.5*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 5200000<last_blk<=6200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 6200000<last_blk<=7200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.8/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.8*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 7200000<last_blk<=8200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.6/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.6*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 8200000<last_blk<=9200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.4/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.4*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 9200000<last_blk<=10200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.2/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.2*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 10200000<last_blk<=11200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 11200000<last_blk<=12200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.8/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.8*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 12200000<last_blk<=13200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.6/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.6*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 13200000<last_blk<=14200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.4/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.4*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 14200000<last_blk<=15200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.2/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.2*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 15200000<last_blk<=16200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 16200000<last_blk<=17200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.8/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*1.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.8*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 17200000<last_blk<=18200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.6/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*1.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.6*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 18200000<last_blk<=19200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.4/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*1.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.4*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 19200000<last_blk<=20200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.2/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*1.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.2*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 20200000<last_blk<=21200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 21200000<last_blk<=22200000:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            case 22200000<last_blk:
+              msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*0.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*0.8/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*0.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*0.8*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
+              break;
+            }}}})
             .catch(error => console.log(`Can't connect to http://akroma.minerpool.net/api/stats.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'mninfo':
@@ -141,7 +227,10 @@ client.on('message', msg => {
         case 'mnrewards':
           fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
-            .then(json => avgBT=json.avgBlocktime)
+            .then(json => {
+              avgBT=json.avgBlocktime;
+              last_blk=json.height[json.height.length-1];
+            })
             .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma'.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://api.akroma.io/prices')
             .then(res => res.json())
@@ -150,8 +239,80 @@ client.on('message', msg => {
           fetch('https://akroma.io/api/network')
             .then(res => res.json())
             .then (json => {switch (true) {
-            case args[0]===undefined:
+            case args[0]===undefined:{switch(true) {
+            case last_blk<=300000:
+              msg.channel.send('Masternodes are not implemented for the moment. They will be available after block 300000.');
+              break;
+            case 300000<last_blk<=1200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 1200000<last_blk<=2200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 2200000<last_blk<=3200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 3200000<last_blk<=4200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.6/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.6/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 4200000<last_blk<=5200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 5200000<last_blk<=6200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.4/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.4/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 6200000<last_blk<=7200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.3/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.3/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 7200000<last_blk<=8200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 8200000<last_blk<=9200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.1/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.1/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 9200000<last_blk<=10200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 10200000<last_blk<=11200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.9/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.9/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 11200000<last_blk<=12200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.8/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.8/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 12200000<last_blk<=13200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.7/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.7/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 13200000<last_blk<=14200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.6/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.6/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 14200000<last_blk<=15200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.5/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.5/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 15200000<last_blk<=16200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.4/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.4/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 16200000<last_blk<=17200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.3/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.3/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 17200000<last_blk<=18200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 18200000<last_blk<=19200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.1/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.1/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 19200000<last_blk<=20200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 20200000<last_blk<=21200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.9/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.9/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 21200000<last_blk<=22200000:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.8/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.8/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 22200000<last_blk:
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.6/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.6/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            }}
               break;
             case isNaN(args[0]):
               msg.channel.send('Input the the number of nodes, like `!mnrewards 1`.');
@@ -162,18 +323,90 @@ client.on('message', msg => {
             case args[0]<0:
               msg.channel.send('Are you in debt my friend?! How have you arrived in this position in the crypto world?! How can you be in debt in a world without banks?! :thinking:');
               break;
-            default:
+            default:{switch(true) {
+            case last_blk<=300000:
+              msg.channel.send('Masternodes are not implemented for the moment. They will be available after block 300000.');
+              break;
+            case 300000<last_blk<=1200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 1200000<last_blk<=2200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            }
-            })
+            case 2200000<last_blk<=3200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 3200000<last_blk<=4200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.6/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.6/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 4200000<last_blk<=5200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 5200000<last_blk<=6200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.4/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.4/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 6200000<last_blk<=7200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.3/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.3/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 7200000<last_blk<=8200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 8200000<last_blk<=9200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.1/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.1/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 9200000<last_blk<=10200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 10200000<last_blk<=11200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.9/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.9/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 11200000<last_blk<=12200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.8/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.8/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 12200000<last_blk<=13200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.7/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.7/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 13200000<last_blk<=14200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.6/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.6/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 14200000<last_blk<=15200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.5/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.5/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 15200000<last_blk<=16200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.4/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.4/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 16200000<last_blk<=17200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.3/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.3/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 17200000<last_blk<=18200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 18200000<last_blk<=19200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.1/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.1/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 19200000<last_blk<=20200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 20200000<last_blk<=21200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.9/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.9/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 21200000<last_blk<=22200000:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.8/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.8/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            case 22200000<last_blk:
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.6/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.6/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              break;
+            }}}})
             .catch(error => console.log(`Can't connect to https://akroma.io/api/network'.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'epoch':
           fetch('https://stats.akroma.io/akroma')
             .then(res => res.json())
             .then(json => {switch(true) {
-            case json.height[json.height.length-1]<=1200000:
+            case json.height[json.height.length-1]<=300000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **300001**\n• Epoch change in•  **${Math.floor((300000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 9.00 | 0.00 | 1.00 |  **10.00**  |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
+              break;
+            case 300000<json.height[json.height.length-1]<=1200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **1200001**\n• Epoch change in•  **${Math.floor((1200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 7.00 | 2.00 | 1.00 |  **10.00**  |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
             case 1200000<json.height[json.height.length-1]<=2200000:
@@ -280,7 +513,7 @@ client.on('message', msg => {
             break;
           default:
             msg.channel.send('Maybe you wanted to write `!exchange` or `!exchange [EXCHANGE]`?');
-            break;}
+          }
           break;
         case 'akausd':
           fetch('https://api.akroma.io/prices')
@@ -300,10 +533,22 @@ client.on('message', msg => {
               break;
             default:
               msg.channel.send(`**${args[0]} AKA** = **${json.usdRaw*args[0]}$**\n_Today the approximate price of ***1 AKA*** is ***${json.usdRaw}$*** and yesterday was ***${json.usdDayAgoRaw}$***._`);
-              break;
-            }
-            })
+            }})
             .catch(error => console.log(`Can't connect to https://api.akroma.io/prices'.\nError: \n-----------\n${error}\n-----------`));
+          break;
+        case 'coininfo':
+          fetch('https://api.coinmarketcap.com/v2/ticker/1/')
+            .then(res => res.json())
+            .then(json => cmc_btc = json)
+            .catch(error => console.log(`Can't connect to https://api.coinmarketcap.com/v2/ticker/1/.\nError: \n-----------\n${error}\n-----------`));
+          fetch('https://akroma.io/api/network')
+            .then(res => res.json())
+            .then(json => nodes_stats = json)
+            .catch(error => console.log(`Can't connect to https://akroma.io/api/network.\nError: \n-----------\n${error}\n-----------`));
+          fetch('https://api.coinmarketcap.com/v2/ticker/3151/')
+            .then(res => res.json())
+            .then(json => msg.channel.send(`• Current Price•          **${Math.floor(json.data.quotes.USD.price/cmc_btc.data.quotes.USD.price*10000000)/10000000} BTC** | **${Math.floor(json.data.quotes.USD.price*1000)/1000}$**\n• 24h Volume •           **${Math.floor(json.data.quotes.USD.volume_24h/cmc_btc.data.quotes.USD.price*100)/100} BTC** | **${Math.floor(json.data.quotes.USD.volume_24h)}$**\n• Market Cap•             **${Math.floor(json.data.quotes.USD.market_cap)}$**\n• Circulating Supply• **${Math.floor(json.data.circulating_supply)} AKA**\n• Locked Coins•          **${nodes_stats.data.locked} AKA**\n• 24h Change•            **${json.data.quotes.USD.percent_change_24h}%**\n`))
+            .catch(error => console.log(`Can't connect to https://api.coinmarketcap.com/v2/ticker/3151/.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'pool':
           switch (cmd1){
@@ -369,11 +614,10 @@ client.on('message', msg => {
             break;
           default:
             msg.channel.send('Unrecognized pool. Please check again.');
-            break;}
+          }
           break;
         default:
           msg.channel.send('Command not recognized. `!help` to get a list of commands.');
-          break;
         }
       }
       else msg.channel.send(`Beep beep... oooh a young one! Please try to speak with me in ${'<#440132389986107392>'} channel or you can wisper me your secrets...`);

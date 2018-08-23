@@ -1,6 +1,10 @@
-## Akroma-BOT v.1.3
+## Akroma-BOT v.1.5
 
 ### Discord bot for Akroma Official
+
+v.1.5 - deloyed 23.08.2018
+- added !coininfo command
+- now epochs are taken into consideration in !hpow and !mnrewards
 
 v.1.4 - deloyed 21.06.2018
 - replaced !diff with !netinfo command

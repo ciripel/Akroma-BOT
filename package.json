@@ -1,11 +1,12 @@
 {
   "name": "Akroma-BOT",
-  "version": "1.4",
+  "version": "1.5",
   "description": "Discord bot for Akroma Official",
   "main": "bot.js",
   "author": "Amitabha",
+  "license": "MIT",
   "dependencies": {
-    "discord.js": "^11.3.2",
-    "node-fetch": "^2.1.2"
+    "discord.js": "^11.4.2",
+    "node-fetch": "^2.2.0"
   }
 }
