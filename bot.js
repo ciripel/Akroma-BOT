@@ -138,70 +138,70 @@ client.on('message', msg => {
             case last_blk<=300000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*9/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*9/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*9/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*9*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 300000<last_blk<=1200000:
+            case 300000<last_blk && last_blk<=1200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*7/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*7*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 1200000<last_blk<=2200000:
+            case 1200000<last_blk && last_blk<=2200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*6/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*6*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 2200000<last_blk<=3200000:
+            case 2200000<last_blk && last_blk<=3200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5.5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5.5/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*5.5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5.5*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 3200000<last_blk<=4200000:
+            case 3200000<last_blk && last_blk<=4200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*5*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 4200000<last_blk<=5200000:
+            case 4200000<last_blk && last_blk<=5200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4.5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4.5/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*4.5/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4.5*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 5200000<last_blk<=6200000:
+            case 5200000<last_blk && last_blk<=6200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*4*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 6200000<last_blk<=7200000:
+            case 6200000<last_blk && last_blk<=7200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.8/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.8*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 7200000<last_blk<=8200000:
+            case 7200000<last_blk && last_blk<=8200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.6/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.6*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 8200000<last_blk<=9200000:
+            case 8200000<last_blk && last_blk<=9200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.4/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.4*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 9200000<last_blk<=10200000:
+            case 9200000<last_blk && last_blk<=10200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.2/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3.2*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 10200000<last_blk<=11200000:
+            case 10200000<last_blk && last_blk<=11200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*3/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*3*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 11200000<last_blk<=12200000:
+            case 11200000<last_blk && last_blk<=12200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.8/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.8*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 12200000<last_blk<=13200000:
+            case 12200000<last_blk && last_blk<=13200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.6/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.6*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 13200000<last_blk<=14200000:
+            case 13200000<last_blk && last_blk<=14200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.4/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.4*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 14200000<last_blk<=15200000:
+            case 14200000<last_blk && last_blk<=15200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.2/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2.2*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 15200000<last_blk<=16200000:
+            case 15200000<last_blk && last_blk<=16200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*2*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 16200000<last_blk<=17200000:
+            case 16200000<last_blk && last_blk<=17200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.8/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*1.8/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.8*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 17200000<last_blk<=18200000:
+            case 17200000<last_blk && last_blk<=18200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.6/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*1.6/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.6*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 18200000<last_blk<=19200000:
+            case 18200000<last_blk && last_blk<=19200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.4/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*1.4/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.4*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 19200000<last_blk<=20200000:
+            case 19200000<last_blk && last_blk<=20200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.2/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24*1.2/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*1.2*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 20200000<last_blk<=21200000:
+            case 20200000<last_blk && last_blk<=21200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
-            case 21200000<last_blk<=22200000:
+            case 21200000<last_blk && last_blk<=22200000:
               msg.channel.send(`Current network difficulty is **${Math.floor(json.nodes[0].difficulty/1000000000)/1000} Th**.\nA hashrate of **${args[0]} Mh/s** will get you approximately **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600/avgBT*usdRaw)/1000}$***)_ per **hour** and **${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24/avgBT)/1000} AKA** _(***${Math.floor(args[0]/json.nodes[0].difficulty*10000000000*3600*24/avgBT*usdRaw)/1000}$***)_ per **day** at current network difficulty.`);
               break;
             case 22200000<last_blk:
@@ -243,70 +243,70 @@ client.on('message', msg => {
             case last_blk<=300000:
               msg.channel.send('Masternodes are not implemented for the moment. They will be available after block 300000.');
               break;
-            case 300000<last_blk<=1200000:
+            case 300000<last_blk && last_blk<=1200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 1200000<last_blk<=2200000:
+            case 1200000<last_blk && last_blk<=2200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 2200000<last_blk<=3200000:
+            case 2200000<last_blk && last_blk<=3200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 3200000<last_blk<=4200000:
+            case 3200000<last_blk && last_blk<=4200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.6/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.6/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 4200000<last_blk<=5200000:
+            case 4200000<last_blk && last_blk<=5200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 5200000<last_blk<=6200000:
+            case 5200000<last_blk && last_blk<=6200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.4/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.4/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 6200000<last_blk<=7200000:
+            case 6200000<last_blk && last_blk<=7200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.3/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.3/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 7200000<last_blk<=8200000:
+            case 7200000<last_blk && last_blk<=8200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 8200000<last_blk<=9200000:
+            case 8200000<last_blk && last_blk<=9200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.1/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.1/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 9200000<last_blk<=10200000:
+            case 9200000<last_blk && last_blk<=10200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 10200000<last_blk<=11200000:
+            case 10200000<last_blk && last_blk<=11200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.9/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.9/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 11200000<last_blk<=12200000:
+            case 11200000<last_blk && last_blk<=12200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.8/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.8/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 12200000<last_blk<=13200000:
+            case 12200000<last_blk && last_blk<=13200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.7/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.7/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 13200000<last_blk<=14200000:
+            case 13200000<last_blk && last_blk<=14200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.6/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.6/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 14200000<last_blk<=15200000:
+            case 14200000<last_blk && last_blk<=15200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.5/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.5/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 15200000<last_blk<=16200000:
+            case 15200000<last_blk && last_blk<=16200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.4/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.4/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 16200000<last_blk<=17200000:
+            case 16200000<last_blk && last_blk<=17200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.3/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.3/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 17200000<last_blk<=18200000:
+            case 17200000<last_blk && last_blk<=18200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 18200000<last_blk<=19200000:
+            case 18200000<last_blk && last_blk<=19200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.1/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.1/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 19200000<last_blk<=20200000:
+            case 19200000<last_blk && last_blk<=20200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 20200000<last_blk<=21200000:
+            case 20200000<last_blk && last_blk<=21200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.9/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.9/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 21200000<last_blk<=22200000:
+            case 21200000<last_blk && last_blk<=22200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.8/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.8/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
             case 22200000<last_blk:
@@ -327,70 +327,70 @@ client.on('message', msg => {
             case last_blk<=300000:
               msg.channel.send('Masternodes are not implemented for the moment. They will be available after block 300000.');
               break;
-            case 300000<last_blk<=1200000:
+            case 300000<last_blk && last_blk<=1200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 1200000<last_blk<=2200000:
+            case 1200000<last_blk && last_blk<=2200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 2200000<last_blk<=3200000:
+            case 2200000<last_blk && last_blk<=3200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 3200000<last_blk<=4200000:
+            case 3200000<last_blk && last_blk<=4200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.6/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.6/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 4200000<last_blk<=5200000:
+            case 4200000<last_blk && last_blk<=5200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 5200000<last_blk<=6200000:
+            case 5200000<last_blk && last_blk<=6200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.4/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.4/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 6200000<last_blk<=7200000:
+            case 6200000<last_blk && last_blk<=7200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.3/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.3/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 7200000<last_blk<=8200000:
+            case 7200000<last_blk && last_blk<=8200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 8200000<last_blk<=9200000:
+            case 8200000<last_blk && last_blk<=9200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.1/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.1/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 9200000<last_blk<=10200000:
+            case 9200000<last_blk && last_blk<=10200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 10200000<last_blk<=11200000:
+            case 10200000<last_blk && last_blk<=11200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.9/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.9/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 11200000<last_blk<=12200000:
+            case 11200000<last_blk && last_blk<=12200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.8/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.8/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 12200000<last_blk<=13200000:
+            case 12200000<last_blk && last_blk<=13200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.7/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.7/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 13200000<last_blk<=14200000:
+            case 13200000<last_blk && last_blk<=14200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.6/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.6/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 14200000<last_blk<=15200000:
+            case 14200000<last_blk && last_blk<=15200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.5/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.5/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 15200000<last_blk<=16200000:
+            case 15200000<last_blk && last_blk<=16200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.4/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.4/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 16200000<last_blk<=17200000:
+            case 16200000<last_blk && last_blk<=17200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.3/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.3/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 17200000<last_blk<=18200000:
+            case 17200000<last_blk && last_blk<=18200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 18200000<last_blk<=19200000:
+            case 18200000<last_blk && last_blk<=19200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*1.1/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*1.1/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 19200000<last_blk<=20200000:
+            case 19200000<last_blk && last_blk<=20200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 20200000<last_blk<=21200000:
+            case 20200000<last_blk && last_blk<=21200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.9/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.9/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
-            case 21200000<last_blk<=22200000:
+            case 21200000<last_blk && last_blk<=22200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*0.8/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*0.8/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
             case 22200000<last_blk:
@@ -406,70 +406,69 @@ client.on('message', msg => {
             case json.height[json.height.length-1]<=300000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **300001**\n• Epoch change in•  **${Math.floor((300000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 9.00 | 0.00 | 1.00 |  **10.00**  |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 300000<json.height[json.height.length-1]<=1200000:
-              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **1200001**\n• Epoch change in•  **${Math.floor((1200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 7.00 | 2.00 | 1.00 |  **10.00**  |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
-              break;
-            case 1200000<json.height[json.height.length-1]<=2200000:
+            case 300000<json.height[json.height.length-1] && json.height[json.height.length-1]<=1200000:
+              msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **1200001**\n• Epoch change in•  **${Math.floor((1200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 7.00 | 2.00 | 1.00 |  **10.00**  |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);              break;
+            case 1200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=2200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **2200001**\n• Epoch change in•  **${Math.floor((2200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 6.00 | 2.25 | 0.75 |  **9.00**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 2200000<json.height[json.height.length-1]<=3200000:
+            case 2200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=3200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **3200001**\n• Epoch change in•  **${Math.floor((3200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 5.50 | 2.50 | 0.65 |  **8.65**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 3200000<json.height[json.height.length-1]<=4200000:
+            case 3200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=4200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **4200001**\n• Epoch change in•  **${Math.floor((4200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 5.00 | 2.60 | 0.55 |  **8.15**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 4200000<json.height[json.height.length-1]<=5200000:
+            case 4200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=5200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **5200001**\n• Epoch change in•  **${Math.floor((5200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 4.50 | 2.50 | 0.45 |  **7.45**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 5200000<json.height[json.height.length-1]<=6200000:
+            case 5200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=6200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **6200001**\n• Epoch change in•  **${Math.floor((6200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 4.00 | 2.40 | 0.35 |  **6.75**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 6200000<json.height[json.height.length-1]<=7200000:
+            case 6200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=7200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **7200001**\n• Epoch change in•  **${Math.floor((7200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.80 | 2.30 | 0.25 |  **6.35**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 7200000<json.height[json.height.length-1]<=8200000:
+            case 7200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=8200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **8200001**\n• Epoch change in•  **${Math.floor((8200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.60 | 2.20 | 0.15 |  **5.95**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 8200000<json.height[json.height.length-1]<=9200000:
+            case 8200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=9200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **9200001**\n• Epoch change in•  **${Math.floor((9200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.40 | 2.10 | 0.15 |  **5.65**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 9200000<json.height[json.height.length-1]<=10200000:
+            case 9200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=10200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **10200001**\n• Epoch change in•  **${Math.floor((10200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.20 | 2.00 | 0.15 |  **5.35**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 10200000<json.height[json.height.length-1]<=11200000:
+            case 10200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=11200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **11200001**\n• Epoch change in•  **${Math.floor((11200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 3.00 | 1.90 | 0.15 |  **5.05**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 11200000<json.height[json.height.length-1]<=12200000:
+            case 11200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=12200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **12200001**\n• Epoch change in•  **${Math.floor((12200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.80 | 1.80 | 0.15 |  **4.75**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 12200000<json.height[json.height.length-1]<=13200000:
+            case 12200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=13200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **13200001**\n• Epoch change in•  **${Math.floor((13200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.60 | 1.70 | 0.15 |  **4.45**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 13200000<json.height[json.height.length-1]<=14200000:
+            case 13200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=14200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **14200001**\n• Epoch change in•  **${Math.floor((14200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.40 | 1.60 | 0.15 |  **4.15**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 14200000<json.height[json.height.length-1]<=15200000:
+            case 14200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=15200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **15200001**\n• Epoch change in•  **${Math.floor((15200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.20 | 1.50 | 0.15 |  **3.85**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 15200000<json.height[json.height.length-1]<=16200000:
+            case 15200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=16200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **16200001**\n• Epoch change in•  **${Math.floor((16200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 2.00 | 1.40 | 0.10 |  **3.50**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 16200000<json.height[json.height.length-1]<=17200000:
+            case 16200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=17200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **17200001**\n• Epoch change in•  **${Math.floor((17200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.80 | 1.30 | 0.10 |  **3.20**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 17200000<json.height[json.height.length-1]<=18200000:
+            case 17200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=18200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **18200001**\n• Epoch change in•  **${Math.floor((18200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.60 | 1.20 | 0.10 |  **2.90**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 18200000<json.height[json.height.length-1]<=19200000:
+            case 18200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=19200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **19200001**\n• Epoch change in•  **${Math.floor((19200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.40 | 1.10 | 0.10 |  **2.60**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 19200000<json.height[json.height.length-1]<=20200000:
+            case 19200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=20200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **20200001**\n• Epoch change in•  **${Math.floor((20200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.20 | 1.00 | 0.10 |  **2.30**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 20200000<json.height[json.height.length-1]<=21200000:
+            case 20200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=21200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **21200001**\n• Epoch change in•  **${Math.floor((21200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.00 | 0.90 | 0.10 |  **2.00**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
-            case 21200000<json.height[json.height.length-1]<=22200000:
+            case 21200000<json.height[json.height.length-1] && json.height[json.height.length-1]<=22200000:
               msg.channel.send(`• Block height•  **${json.height[json.height.length-1]+1}**\n• Next epoch start block•  **22200001**\n• Epoch change in•  **${Math.floor((22200000-json.height[json.height.length-1])*json.avgBlocktime/86.4)/1000} Days**\n\n--------- Block reward --------\n| Mnr  |  Mn  | Dev  |       **T**      |\n---------------------------------\n| 1.00 | 0.80 | 0.10 |  **1.90**   |\n---------------------------------\n• **Monetary policy** •\n<https://medium.com/akroma/akroma-coin-supply-5cb692a77e1b>`);
               break;
             case 22200000<json.height[json.height.length-1]:
