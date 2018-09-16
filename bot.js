@@ -221,7 +221,7 @@ client.on('message', msg => {
             .catch(error => console.log(`Can't connect to https://stats.akroma.io/akroma.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://akroma.io/api/network')
             .then(res => res.json())
-            .then (json => msg.channel.send(`• Users •      **${json.data.users}**\n• Nodes •     **${json.data.nodes}**\n• ROI •          **${Math.floor(365*3600000*24/avgBT*2.25/json.data.nodes/50)/1000}%**\n• Locked •    **${json.data.locked} AKA**\n• Rewards • **${json.data.akaTotal} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://docs.akroma.io/masternodes/operating-systems/installation-on-linux>`))
+            .then (json => msg.channel.send(`• Users •      **${json.data.totalUsers}**\n• Nodes •     **${json.data.totalNodes}**\n• ROI •          **${Math.floor(365*3600000*24/avgBT*2.25/json.data.totalNodes/50)/1000}%**\n• Locked •    **${json.data.totalLocked} AKA**\n• Rewards • **${json.data.totalPaid} AKA**\n• Last rewards were paid **${timeConverter(lrew_date)}**\n• Install Guide • <https://docs.akroma.io/masternodes/operating-systems/installation-on-linux>`))
             .catch(error => console.log(`Can't connect to https://akroma.io/api/network'.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'mnrewards':
@@ -247,7 +247,7 @@ client.on('message', msg => {
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
             case 1200000<last_blk && last_blk<=2200000:
-              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
+              msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.totalNodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.totalNodes*usdRaw)/1000}$***)_ per **day**.`);
               break;
             case 2200000<last_blk && last_blk<=3200000:
               msg.channel.send(`**1** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes)/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*usdRaw)/1000}$***)_ per **day**.`);
@@ -331,7 +331,7 @@ client.on('message', msg => {
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
             case 1200000<last_blk && last_blk<=2200000:
-              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
+              msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.25/json.data.totalNodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.25/json.data.totalNodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
               break;
             case 2200000<last_blk && last_blk<=3200000:
               msg.channel.send(`**${args[0]}** masternode(s) will give you approximately **${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0])/1000} AKA** _(***${Math.floor(3600000*24/avgBT*2.5/json.data.nodes*args[0]*usdRaw)/1000}$***)_ per **day**.`);
@@ -546,7 +546,7 @@ client.on('message', msg => {
             .catch(error => console.log(`Can't connect to https://akroma.io/api/network.\nError: \n-----------\n${error}\n-----------`));
           fetch('https://api.coinmarketcap.com/v2/ticker/3151/')
             .then(res => res.json())
-            .then(json => msg.channel.send(`• Current Price•          **${Math.floor(json.data.quotes.USD.price/cmc_btc.data.quotes.USD.price*10000000)/10000000} BTC** | **${Math.floor(json.data.quotes.USD.price*1000)/1000}$**\n• 24h Volume •           **${Math.floor(json.data.quotes.USD.volume_24h/cmc_btc.data.quotes.USD.price*100)/100} BTC** | **${Math.floor(json.data.quotes.USD.volume_24h)}$**\n• Market Cap•             **${Math.floor(json.data.quotes.USD.market_cap)}$**\n• Circulating Supply• **${Math.floor(json.data.circulating_supply)} AKA**\n• Locked Coins•          **${nodes_stats.data.locked} AKA**\n• 24h Change•            **${json.data.quotes.USD.percent_change_24h}%**\n`))
+            .then(json => msg.channel.send(`• Current Price•          **${Math.floor(json.data.quotes.USD.price/cmc_btc.data.quotes.USD.price*10000000)/10000000} BTC** | **${Math.floor(json.data.quotes.USD.price*1000)/1000}$**\n• 24h Volume •           **${Math.floor(json.data.quotes.USD.volume_24h/cmc_btc.data.quotes.USD.price*100)/100} BTC** | **${Math.floor(json.data.quotes.USD.volume_24h)}$**\n• Market Cap•             **${Math.floor(json.data.quotes.USD.market_cap)}$**\n• Circulating Supply• **${Math.floor(json.data.circulating_supply)} AKA**\n• Locked Coins•          **${nodes_stats.data.totalLocked} AKA**\n• 24h Change•            **${json.data.quotes.USD.percent_change_24h}%**\n`))
             .catch(error => console.log(`Can't connect to https://api.coinmarketcap.com/v2/ticker/3151/.\nError: \n-----------\n${error}\n-----------`));
           break;
         case 'pool':
