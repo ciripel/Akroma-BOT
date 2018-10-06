@@ -18,7 +18,6 @@ client = Bot(BOT_PREFIX)
 
 @client.event
 async def on_message(msg):
-    m = msg.content.lower()
     check = (
         msg.channel.name == "akroma-bot"
         or msg.channel.type == discord.ChannelType.private
@@ -30,24 +29,25 @@ async def on_message(msg):
     if msg.author == client.user:
         return
     if check:
-        if m.startswith("?help"):
+        args = msg.content[1:].split(" ")
+        if args[0].lower() == ("help"):
             message = "\n".join(data["help"])
-            await client.send_message(msg.channel, message)
-        elif m.startswith("?links"):
+        elif args[0].lower() == ("links"):
             message = "\n".join(data["links"])
-            await client.send_message(msg.channel, message)
-        elif m.startswith("?roadmap"):
+        elif args[0].lower() == ("roadmap"):
             message = f"{data['roadmap']}"
-            await client.send_message(msg.channel, message)
-        elif m.startswith("?awesome"):
+        elif args[0].lower() == ("awesome"):
             message = f"{data['awesome']}"
-            await client.send_message(msg.channel, message)
-        elif m.startswith("?about"):
+        elif args[0].lower() == ("about"):
             message = "\n".join(data["about"])
-            await client.send_message(msg.channel, message)
+        else:
+            if msg.content[0] == BOT_PREFIX:
+                message = f"{data['unknown']}"
     else:
-        message = f"{data['default']}"
-        await client.send_message(msg.channel, message)
+        if msg.content[0] == BOT_PREFIX:
+            message = f"{data['default']}"
+
+    await client.send_message(msg.channel, message)
 
 
 @client.event

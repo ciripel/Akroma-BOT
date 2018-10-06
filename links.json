@@ -34,5 +34,6 @@
             "• Author: ciripel _(Discord: Amitabha#0517)_",
             "• Source Code: <https://github.com/ciripel/Akroma-BOT>"
           ],
+  "unknown": "Command not recognized. `!help` to get a list of commands.",
   "default": "Beep beep... oooh a young one! Please try to speak with me in <#440132389986107392> channel or you can wisper me your secrets..."
 }
