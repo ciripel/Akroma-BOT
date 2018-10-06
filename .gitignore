@@ -1,3 +1,4 @@
 auth.json
 Pipfile
 Pipfile.lock
+.mypy_cache

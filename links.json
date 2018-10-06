@@ -1,0 +1,38 @@
+{
+  "localserver": "http://localhost:8546",
+  "remoteserver1": "http://remote.akroma.io",
+  "remoteserver": "http://2373.remote.akroma.io:8546",
+  "remoteserver2": "http://2826.remote.akroma.io:8746",
+  "coinbase": "0x04cfa4f946e2841b79d3e895e857f9ad3a951c04",
+  "help": ["-- `!help` | This is your help.",
+           "-- `!links` | Useful links.",
+           "-- `!netinfo` | Show current network stats.",
+           "-- `!mninfo` | Dashboard info.",
+           "-- `!hpow [your Mh/s]` | Approximate AKA per hour/day.",
+           "-- `!mnrewards [no. of nodes]` | Approximate AKA reward per day.",
+           "-- `!akausd [amount]` | Current price in USD.",
+           "-- `!roadmap` | Link to Akroma Road-map.",
+           "-- `!awesome` | Link to Awesome Akroma.",
+           "-- `!exchange [EXCHANGE]` | Current Akroma exchanges [_exchange info_].",
+           "-- `!pool [POOL]` | Akroma mining pools [_connection info_].",
+           "-- `!epoch` - Akroma monetary policy",
+           "-- `!coininfo` | Show coin info.",
+           "-- `!about` | Info about this bot."
+         ],
+  "links": ["**Akroma Website** • <https://akroma.io/>",
+            "**Akroma Announcement** • <https://bitcointalk.org/index.php?topic=2844280>",
+            "**Akroma Whitepaper** • <http://bit.ly/2EMQ4E4>",
+            "**Akroma wiki** • <https://docs.akroma.io/>",
+            "**Akroma Github** • <https://github.com/akroma-project/>",
+            "**Akroma Wallets** • <https://w.akroma.io/> <https://play.google.com/store/apps/details?id=com.wallet.crypto.akroma&hl=en> <https://chrome.google.com/webstore/detail/akroma/gghgmpjmebiapnjjpgakibnpklhbnkof>",
+            "**Akroma Block Explorer** • <https://explorer.akroma.io>",
+            "**Akroma Community** • <https://medium.com/akroma> <https://t.me/akroma_official> <https://twitter.com/akroma_io/> <https://www.facebook.com/AkromaIO/> <https://instagram.com/akroma.io>"
+          ],
+  "roadmap": "• **Akroma Road-map** •\n<https://medium.com/akroma/akroma-road-map-q2-2018-ee616bb2d5f8>",
+  "awesome": "• **Awesome Akroma** •\n<https://github.com/akroma-project/awesome-akroma/blob/master/README.md>",
+  "about": ["• Version 1.5",
+            "• Author: ciripel _(Discord: Amitabha#0517)_",
+            "• Source Code: <https://github.com/ciripel/Akroma-BOT>"
+          ],
+  "default": "Beep beep... oooh a young one! Please try to speak with me in <#440132389986107392> channel or you can wisper me your secrets..."
+}
