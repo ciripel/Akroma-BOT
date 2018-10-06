@@ -1,4 +1,4 @@
-## Akroma-BOT v.1.5
+## Akroma-BOT v.1.5 
 
 ### Discord bot for Akroma Official
 
