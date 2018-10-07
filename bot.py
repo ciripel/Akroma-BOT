@@ -22,26 +22,6 @@ remoteserver = HTTPProvider(data["remoteserver"])
 remoteserver1 = HTTPProvider(data["remoteserver1"])
 remoteserver2 = HTTPProvider(data["remoteserver2"])
 w3 = Web3([remoteserver, remoteserver1, remoteserver1])
-# print(f"Current provider {w3.currentProvider}")
-lastblock = w3.eth.blockNumber
-actualtime = w3.eth.getBlock(lastblock).timestamp
-print(f"Latest block is: {lastblock}:{actualtime}")
-
-"""
-function getAverageBlockTime(blocks){
-  return web3.eth.getBlockNumber().then(result=> {
-    var pr1=web3.eth.getBlock(result)
-    var pr2=web3.eth.getBlock(result - blocks)
-    return Promise.all([pr1, pr2]).then(result=> {
-      var timestamps=[result[0].timestamp, result[1].timestamp]
-      var Average_BT=(timestamps[0] - timestamps[1]) / (blocks - 1)
-      return Average_BT
-        })
-      .catch(err= > console.log(`Something broke: ${err}`))
-      })
-    .catch(err=> console.log(`Something broke: ${err}`))
-}
-"""
 
 
 def getAverageBlockTime(blocks):
@@ -54,7 +34,6 @@ def getAverageBlockTime(blocks):
 
 @client.event
 async def on_message(msg):
-
     # We do not want the bot to respond to Bots or Webhooks
     if msg.author.bot:
         return
@@ -98,11 +77,6 @@ async def on_message(msg):
             if msg.content[0] == BOT_PREFIX:
                 message = f"{data['unknown']}"
                 await client.send_message(msg.channel, message)
-
-    else:
-        if msg.content[0] == BOT_PREFIX:
-            message = f"{data['default']}"
-            await client.send_message(msg.channel, message)
 
 
 @client.event
