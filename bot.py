@@ -53,14 +53,19 @@ async def on_message(msg):
         cmd = args[0].lower()
         if cmd == ("help"):
             message = "\n".join(data["help"])
+            await client.send_message(msg.channel, message)
         elif cmd == ("links"):
             message = "\n".join(data["links"])
+            await client.send_message(msg.channel, message)
         elif cmd == ("roadmap"):
             message = f"{data['roadmap']}"
+            await client.send_message(msg.channel, message)
         elif cmd == ("awesome"):
             message = f"{data['awesome']}"
+            await client.send_message(msg.channel, message)
         elif cmd == ("about"):
             message = "\n".join(data["about"])
+            await client.send_message(msg.channel, message)
         elif cmd == ("netinfo"):
             avgBT = getAverageBlockTime(6500)
             lastblock = w3.eth.blockNumber
@@ -68,13 +73,15 @@ async def on_message(msg):
                 f"• Block Height• **{format(lastblock, ',')}**\n• Avg"
                 + f" Block Time• **{round(avgBT, 4)} s**\n"
             )
+            await client.send_message(msg.channel, message)
         else:
             if msg.content[0] == BOT_PREFIX:
                 message = f"{data['unknown']}"
+                await client.send_message(msg.channel, message)
     else:
         if msg.content[0] == BOT_PREFIX:
             message = f"{data['default']}"
-    await client.send_message(msg.channel, message)
+            await client.send_message(msg.channel, message)
 
 
 @client.event
