@@ -1,8 +1,8 @@
 {
-  "localserver": "http://localhost:8546",
-  "remoteserver1": "http://remote.akroma.io",
-  "remoteserver": "http://2373.remote.akroma.io:8546",
-  "remoteserver2": "http://2826.remote.akroma.io:8746",
+  "localserver": "https://localhost:8546",
+  "remoteserver1": "https://remote.akroma.io",
+  "remoteserver": "https://2373.remote.akroma.io",
+  "remoteserver2": "https://2826.remote.akroma.io",
   "coinbase": "0x04cfa4f946e2841b79d3e895e857f9ad3a951c04",
   "help": ["-- `!help` | This is your help.",
            "-- `!links` | Useful links.",
@@ -34,5 +34,6 @@
             "• Author: ciripel _(Discord: Amitabha#0517)_",
             "• Source Code: <https://github.com/ciripel/Akroma-BOT>"
           ],
+  "unknown": "Command not recognized. `!help` to get a list of commands.",
   "default": "Beep beep... oooh a young one! Please try to speak with me in <#440132389986107392> channel or you can wisper me your secrets..."
 }
