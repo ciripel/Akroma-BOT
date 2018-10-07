@@ -5,6 +5,7 @@ import json
 
 import discord
 from discord.ext.commands import Bot
+from requests import get
 from web3 import HTTPProvider, Web3
 from web3.exceptions import CannotHandleRequest
 
@@ -50,17 +51,18 @@ async def on_message(msg):
     if msg.author.bot:
         return
 
+    # Bot checks BOT_PREFIX
+    if msg.content[0] != BOT_PREFIX:
+        return
+
     # Bot runs in #akroma-bot channel and private channels for everyone
     # Bot runs in all channels for specific roles
-    if (
-        not (
-            msg.channel.name == "akroma-bot"
-            or msg.channel.type == discord.ChannelType.private
-            or "Core-Team" in [role.name for role in msg.author.roles]
-            or "Support-Team" in [role.name for role in msg.author.roles]
-            or "Contributors" in [role.name for role in msg.author.roles]
-        )
-        and msg.content[0] == BOT_PREFIX
+    if not (
+        msg.channel.name == "akroma-bot"
+        or msg.channel.type == discord.ChannelType.private
+        or "Core-Team" in [role.name for role in msg.author.roles]
+        or "Support-Team" in [role.name for role in msg.author.roles]
+        or "Contributors" in [role.name for role in msg.author.roles]
     ):
         message = f"{data['default']}"
         await client.send_message(msg.channel, message)
@@ -70,31 +72,37 @@ async def on_message(msg):
     cmd = args[0].lower()
     if cmd == ("help"):
         message = "\n".join(data["help"])
-        await client.send_message(msg.channel, message)
     elif cmd == ("links"):
         message = "\n".join(data["links"])
-        await client.send_message(msg.channel, message)
     elif cmd == ("roadmap"):
         message = f"{data['roadmap']}"
-        await client.send_message(msg.channel, message)
     elif cmd == ("awesome"):
         message = f"{data['awesome']}"
-        await client.send_message(msg.channel, message)
     elif cmd == ("about"):
         message = "\n".join(data["about"])
-        await client.send_message(msg.channel, message)
-    elif cmd == ("netinfo"):
-        avgBT = getAverageBlockTime(6500)
-        lastblock = w3.eth.blockNumber
-        message = (
-            f"• Block Height• **{format(lastblock, ',')}**\n• Avg"
-            + f" Block Time• **{round(avgBT, 4)} s**\n"
-        )
-        await client.send_message(msg.channel, message)
-    else:
-        if msg.content[0] == BOT_PREFIX:
+    elif cmd == "members":
+        if msg.channel.type != discord.ChannelType.private and "Core-Team" in [
+            role.name for role in msg.author.roles
+        ]:
+            members = msg.author.server.member_count
+            message = f"{members}"
+        else:
             message = f"{data['unknown']}"
-            await client.send_message(msg.channel, message)
+    elif cmd == ("netinfo"):
+        avg_bt = getAverageBlockTime(6500)
+        last_block = w3.eth.blockNumber
+        minerpools = get(data["pool_api"])
+        pool_api = minerpools.json()
+        diff = pool_api["nodes"][0]["difficulty"]
+        message = (
+            f"• Block Height• **{format(last_block, ',')}**\n• Avg"
+            + f" Block Time• **{round(avg_bt, 2)} s**\n• Network Difficulty• *"
+            + f"*{round(int(diff)/(10**10), 2)} Th**"
+        )
+    else:
+        message = f"{data['unknown']}"
+
+    await client.send_message(msg.channel, message)
 
 
 @client.event

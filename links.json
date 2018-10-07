@@ -30,10 +30,12 @@
           ],
   "roadmap": "• **Akroma Road-map** •\n<https://medium.com/akroma/akroma-road-map-q2-2018-ee616bb2d5f8>",
   "awesome": "• **Awesome Akroma** •\n<https://github.com/akroma-project/awesome-akroma/blob/master/README.md>",
+  "members": "Number of members on Akroma Official Discord: ",
   "about": ["• Version 1.5",
             "• Author: ciripel _(Discord: Amitabha#0517)_",
             "• Source Code: <https://github.com/ciripel/Akroma-BOT>"
           ],
   "unknown": "Command not recognized. `!help` to get a list of commands.",
-  "default": "Beep beep... oooh a young one! Please try to speak with me in <#440132389986107392> channel or you can wisper me your secrets..."
+  "default": "Beep beep... oooh a young one! Please try to speak with me in <#440132389986107392> channel or you can wisper me your secrets...",
+  "pool_api": "http://akroma.minerpool.net/api/stats"
 }
