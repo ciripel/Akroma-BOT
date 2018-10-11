@@ -51,5 +51,8 @@
   "pool_api": "http://akroma.minerpool.net/api/stats",
   "network": {"link": "https://akroma.io/api/network",
               "guide_link": "• Install Guide • <https://docs.akroma.io/masternodes/operating-systems/installation-on-linux>"
-          }
+          },
+  "cmc": {"cmc_btc":"https://api.coinmarketcap.com/v2/ticker/1/",
+          "cmc_aka":"https://api.coinmarketcap.com/v2/ticker/3151/"
+  }
 }

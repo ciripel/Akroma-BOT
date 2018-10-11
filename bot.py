@@ -127,7 +127,7 @@ async def on_message(msg):
                 )
                 message = (
                     f"• Users •      **{total_users}**\n• Nodes •     **{total_nodes}"
-                    + f"**\n• ROI •          **{roi_value:7.3f}%**\n• Locked •    **"
+                    + f"**\n• ROI •         **{roi_value:7.3f}%**\n• Locked •    **"
                     + f"{total_locked} AKA**\n• Rewards • **{total_paid} AKA**\n"
                     + f"{guide_link}"
                 )
@@ -165,7 +165,27 @@ async def on_message(msg):
     elif cmd == "akausd":
         pass
     elif cmd == "coininfo":
-        pass
+        network = get(data["network"]["link"])
+        cmc_btc = get(data["cmc"]["cmc_btc"])
+        cmc_aka = get(data["cmc"]["cmc_aka"])
+        network_api = network.json()
+        cmc_btc_api = cmc_btc.json()
+        cmc_aka_api = cmc_aka.json()
+        total_locked = network_api["data"]["totalLocked"]
+        aka_usd_price = cmc_aka_api["data"]["quotes"]["USD"]["price"]
+        btc_usd_price = cmc_btc_api["data"]["quotes"]["USD"]["price"]
+        aka_24vol = cmc_aka_api["data"]["quotes"]["USD"]["volume_24h"]
+        aka_mcap = cmc_aka_api["data"]["quotes"]["USD"]["market_cap"]
+        aka_circ_supply = cmc_aka_api["data"]["circulating_supply"]
+        aka_24change = cmc_aka_api["data"]["quotes"]["USD"]["percent_change_24h"]
+        message = (
+            f"• Current Price•**{aka_usd_price/btc_usd_price:22.8f} BTC ** | **"
+            + f"{aka_usd_price:8.4f}$**\n• 24h Volume •**"
+            + f"{aka_24vol/btc_usd_price:18.3f} BTC ** | **{aka_24vol:10.2f}$**"
+            + f"\n• Market Cap•**{aka_mcap:21.0f}$**\n• Circulating Supply• **"
+            + f"{aka_circ_supply:10.0f} AKA **\n• Locked Coins•            **"
+            + f"{total_locked} AKA **\n• 24h Change•**{aka_24change:19.2f} % **"
+        )
     elif cmd == "pool":
         pass
     else:
