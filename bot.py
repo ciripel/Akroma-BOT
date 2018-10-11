@@ -107,11 +107,10 @@ async def on_message(msg):
         pass
     elif cmd == "epoch":
         avg_bt = getAverageBlockTime(6500)
-        last_block = w3.eth.blockNumber
+        last_block = 22230000
         for x in range(len(data["epoch"]["limit"])):
-            if (
-                data["epoch"]["limit"][x] <= last_block
-                and last_block < data["epoch"]["limit"][x + 1]
+            if float(data["epoch"]["limit"][x]) <= last_block and last_block < float(
+                data["epoch"]["limit"][x + 1]
             ):
                 total = (
                     float(data["epoch"]["mnr"][x])
@@ -126,7 +125,7 @@ async def on_message(msg):
                 )
                 message = (
                     f"{data['epoch']['bh']}{last_block}{data['epoch']['nesb']}"
-                    + f"{int(data['epoch']['limit'][x+1])+1}"
+                    + f"{float(data['epoch']['limit'][x+1])+1}"
                     + f"{data['epoch']['ech']}{time_left:10.3f}"
                     + f"{data['epoch']['brew']}{data['epoch']['mnr'][x]:5.2f} |"
                     + f"{data['epoch']['mn'][x]:5.2f} |"
