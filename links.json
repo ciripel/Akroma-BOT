@@ -48,5 +48,8 @@
           },
   "unknown": "Command not recognized. `!help` to get a list of commands.",
   "default": "Beep beep... oooh a young one! Please try to speak with me in <#440132389986107392> channel or you can wisper me your secrets...",
-  "pool_api": "http://akroma.minerpool.net/api/stats"
+  "pool_api": "http://akroma.minerpool.net/api/stats",
+  "network": {"link": "https://akroma.io/api/network",
+              "guide_link": "• Install Guide • <https://docs.akroma.io/masternodes/operating-systems/installation-on-linux>"
+          }
 }

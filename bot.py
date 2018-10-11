@@ -102,12 +102,40 @@ async def on_message(msg):
     elif cmd == "hpow":
         pass
     elif cmd == "mninfo":
-        pass
+        avg_bt = getAverageBlockTime(6500)
+        last_block = w3.eth.blockNumber
+        network = get(data["network"]["link"])
+        network_api = network.json()
+        total_users = network_api["data"]["totalUsers"]
+        total_nodes = network_api["data"]["totalNodes"]
+        total_locked = network_api["data"]["totalLocked"]
+        total_paid = network_api["data"]["totalPaid"]
+        guide_link = data["network"]["guide_link"]
+        for x in range(len(data["epoch"]["limit"])):
+            if float(data["epoch"]["limit"][x]) <= last_block and last_block < float(
+                data["epoch"]["limit"][x + 1]
+            ):
+                roi_value = (
+                    365
+                    * 36
+                    * 10 ** 5
+                    * 24
+                    / avg_bt
+                    * float(data["epoch"]["mn"][x])
+                    / total_nodes
+                    / (5 * 10 ** 4)
+                )
+                message = (
+                    f"• Users •      **{total_users}**\n• Nodes •     **{total_nodes}"
+                    + f"**\n• ROI •          **{roi_value:7.3f}%**\n• Locked •    **"
+                    + f"{total_locked} AKA**\n• Rewards • **{total_paid} AKA**\n"
+                    + f"{guide_link}"
+                )
     elif cmd == "mnrewards":
         pass
     elif cmd == "epoch":
         avg_bt = getAverageBlockTime(6500)
-        last_block = 22230000
+        last_block = w3.eth.blockNumber
         for x in range(len(data["epoch"]["limit"])):
             if float(data["epoch"]["limit"][x]) <= last_block and last_block < float(
                 data["epoch"]["limit"][x + 1]
