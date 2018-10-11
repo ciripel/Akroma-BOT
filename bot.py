@@ -70,15 +70,15 @@ async def on_message(msg):
 
     args = msg.content[1:].split(" ")
     cmd = args[0].lower()
-    if cmd == ("help"):
+    if cmd == "help":
         message = "\n".join(data["help"])
-    elif cmd == ("links"):
+    elif cmd == "links":
         message = "\n".join(data["links"])
-    elif cmd == ("roadmap"):
+    elif cmd == "roadmap":
         message = f"{data['roadmap']}"
-    elif cmd == ("awesome"):
+    elif cmd == "awesome":
         message = f"{data['awesome']}"
-    elif cmd == ("about"):
+    elif cmd == "about":
         message = "\n".join(data["about"])
     elif cmd == "members":
         if msg.channel.type != discord.ChannelType.private and "Core-Team" in [
@@ -88,7 +88,7 @@ async def on_message(msg):
             message = f"{members}"
         else:
             message = f"{data['unknown']}"
-    elif cmd == ("netinfo"):
+    elif cmd == "netinfo":
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
         minerpools = get(data["pool_api"])
@@ -99,6 +99,48 @@ async def on_message(msg):
             + f" Block Time• **{round(avg_bt, 2)} s**\n• Network Difficulty• *"
             + f"*{round(int(diff)/(10**10), 2)} Th**"
         )
+    elif cmd == "hpow":
+        pass
+    elif cmd == "mninfo":
+        pass
+    elif cmd == "mnrewards":
+        pass
+    elif cmd == "epoch":
+        avg_bt = getAverageBlockTime(6500)
+        last_block = w3.eth.blockNumber
+        for x in range(len(data["epoch"]["limit"])):
+            if (
+                data["epoch"]["limit"][x] <= last_block
+                and last_block < data["epoch"]["limit"][x + 1]
+            ):
+                total = (
+                    float(data["epoch"]["mnr"][x])
+                    + float(data["epoch"]["mn"][x])
+                    + float(data["epoch"]["dev"][x])
+                )
+                time_left = (
+                    (float(data["epoch"]["limit"][x + 1]) - last_block - 1)
+                    * avg_bt
+                    / 86.4
+                    / 10 ** 3
+                )
+                message = (
+                    f"{data['epoch']['bh']}{last_block}{data['epoch']['nesb']}"
+                    + f"{int(data['epoch']['limit'][x+1])+1}"
+                    + f"{data['epoch']['ech']}{time_left:10.3f}"
+                    + f"{data['epoch']['brew']}{data['epoch']['mnr'][x]:5.2f} |"
+                    + f"{data['epoch']['mn'][x]:5.2f} |"
+                    + f"{data['epoch']['dev'][x]:5.2f} |  **{total:5.2f}  "
+                    + f"{data['epoch']['policy']}"
+                )
+    elif cmd == "exchange":
+        pass
+    elif cmd == "akausd":
+        pass
+    elif cmd == "coininfo":
+        pass
+    elif cmd == "pool":
+        pass
     else:
         message = f"{data['unknown']}"
 
