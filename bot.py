@@ -4,8 +4,8 @@
 import json
 
 import discord
+from aiohttp import get
 from discord.ext.commands import Bot
-from requests import get
 from web3 import HTTPProvider, Web3
 from web3.exceptions import CannotHandleRequest
 
@@ -52,8 +52,9 @@ async def on_message(msg):
         return
 
     # Bot checks BOT_PREFIX
-    if msg.content[0] != BOT_PREFIX:
-        return
+    if msg.content:
+        if msg.content[0] != BOT_PREFIX:
+            return
 
     # Bot runs in #akroma-bot channel and private channels for everyone
     # Bot runs in all channels for specific roles
@@ -91,22 +92,33 @@ async def on_message(msg):
     elif cmd == "netinfo":
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
-        minerpools = get(data["pool_api"])
-        pool_api = minerpools.json()
-        diff = pool_api["nodes"][0]["difficulty"]
+        async with get(data["akroma"]) as akroma:
+            if akroma.status == 200:
+                akroma_api = await akroma.json()
+            else:
+                print(f"{data['akroma']} is down")
+        diff = akroma_api["difficulty"]
+        hashrate = akroma_api["hashRate"]
         message = (
             f"• Block Height• **{format(last_block, ',')}**\n• Avg"
-            + f" Block Time• **{round(avg_bt, 2)} s**\n• Network Difficulty• *"
-            + f"*{round(int(diff)/(10**10), 2)} Th**"
+            + f" Block Time• **{round(avg_bt, 2)} s**\n• Network Hashrate• **"
+            + f"{hashrate} GH/s**\n• Network Difficulty• **{diff} Th**"
         )
     elif cmd == "hpow":
         pass
     elif cmd == "mninfo":
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
-        network = get(data["network"]["link"])
-        network_api = network.json()
+        async with get(data["network"]["link"]) as network:
+            if network.status == 200:
+                network_api = await network.json()
+            else:
+                print(f"{data['network']['link']} is down")
         total_users = network_api["data"]["totalUsers"]
+        remote_nodes = network_api["data"]["totalRemote"]
+        full_nodes = network_api["data"]["totalFull"]
+        boot_nodes = network_api["data"]["totalBoot"]
+        balefire_nodes = network_api["data"]["totalBalefire"]
         total_nodes = network_api["data"]["totalNodes"]
         total_locked = network_api["data"]["totalLocked"]
         total_paid = network_api["data"]["totalPaid"]
@@ -126,10 +138,13 @@ async def on_message(msg):
                     / (5 * 10 ** 4)
                 )
                 message = (
-                    f"• Users •      **{total_users}**\n• Nodes •     **{total_nodes}"
-                    + f"**\n• ROI •         **{roi_value:7.3f}%**\n• Locked •    **"
-                    + f"{total_locked} AKA**\n• Rewards • **{total_paid} AKA**\n"
-                    + f"{guide_link}"
+                    f"• Users •**{total_users:23.0f}**\n• Remote Nodes •**"
+                    + f"{remote_nodes:3.0f}**\n• Full Nodes •**{full_nodes:14.0f}**\n"
+                    + f"• Boot Nodes •**{boot_nodes:10.0f}**\n• Balefire Nodes •**"
+                    + f"{balefire_nodes:3.0f}**\n• Total Nodes •**{total_nodes:11.0f}"
+                    + f"**\n• ROI •**{roi_value:30.3f}%**\n• Locked •                "
+                    + f"**{total_locked} AKA**\n• Rewards •             **{total_paid}"
+                    + f" AKA**\n{guide_link}"
                 )
     elif cmd == "mnrewards":
         pass
@@ -165,12 +180,21 @@ async def on_message(msg):
     elif cmd == "akausd":
         pass
     elif cmd == "coininfo":
-        network = get(data["network"]["link"])
-        cmc_btc = get(data["cmc"]["cmc_btc"])
-        cmc_aka = get(data["cmc"]["cmc_aka"])
-        network_api = network.json()
-        cmc_btc_api = cmc_btc.json()
-        cmc_aka_api = cmc_aka.json()
+        async with get(data["network"]["link"]) as network:
+            if network.status == 200:
+                network_api = await network.json()
+            else:
+                print(f"{data['network']['link']} is down")
+        async with get(data["cmc"]["cmc_btc"]) as cmc_btc:
+            if cmc_btc.status == 200:
+                cmc_btc_api = await cmc_btc.json()
+            else:
+                print(f"{data['cmc']['cmc_btc']} is down")
+        async with get(data["cmc"]["cmc_aka"]) as cmc_aka:
+            if cmc_aka.status == 200:
+                cmc_aka_api = await cmc_aka.json()
+            else:
+                print(f"{data['cmc']['cmc_aka']} is down")
         total_locked = network_api["data"]["totalLocked"]
         aka_usd_price = cmc_aka_api["data"]["quotes"]["USD"]["price"]
         btc_usd_price = cmc_btc_api["data"]["quotes"]["USD"]["price"]
