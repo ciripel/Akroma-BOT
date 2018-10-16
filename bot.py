@@ -37,6 +37,14 @@ w3 = Web3(
 )
 
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+
 def getAverageBlockTime(blocks):
     last_block = w3.eth.blockNumber
     now = w3.eth.getBlock(last_block).timestamp
@@ -105,7 +113,7 @@ async def on_message(msg):
             + f"{hashrate} GH/s**\n• Network Difficulty• **{diff} Th**"
         )
     elif cmd == "hpow":
-        pass
+        return
     elif cmd == "mninfo":
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
@@ -147,7 +155,7 @@ async def on_message(msg):
                     + f" AKA**\n{guide_link}"
                 )
     elif cmd == "mnrewards":
-        pass
+        return
     elif cmd == "epoch":
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
@@ -176,9 +184,31 @@ async def on_message(msg):
                     + f"{data['epoch']['policy']}"
                 )
     elif cmd == "exchange":
-        pass
+        return
     elif cmd == "akausd":
-        pass
+        async with get(data["cmc"]["cmc_aka"]) as cmc_aka:
+            if cmc_aka.status == 200:
+                cmc_aka_api = await cmc_aka.json()
+            else:
+                print(f"{data['cmc']['cmc_aka']} is down")
+        aka_usd_price = cmc_aka_api["data"]["quotes"]["USD"]["price"]
+        if len(args) < 2:
+            message = f"_The price of ***1 AKA*** is ***{round(aka_usd_price, 2)}$***._"
+            await client.send_message(msg.channel, message)
+            return
+        cmd1 = args[1].lower()
+        if not is_number(cmd1):
+            message = f"_The price of ***1 AKA*** is ***{round(aka_usd_price, 2)}$***._"
+        elif cmd1 == "0":
+            message = "Welcome young one! We have all started with **0 AKA** zilionsof aeons ago!"
+        elif is_number(cmd1) and float(cmd1) < 0:
+            message = "Hmm! Yup! I feel sorry for you! You owe **AKA**... I feel your pain friend!"
+        elif is_number(cmd1):
+            message = (
+                f"**{cmd1} AKA** = **{round(float(aka_usd_price)*float(cmd1),2)}$**"
+                + f"\n_The price of ***1 AKA*** is ***{round(aka_usd_price, 2)}$***_"
+            )
+
     elif cmd == "coininfo":
         async with get(data["network"]["link"]) as network:
             if network.status == 200:
@@ -211,7 +241,7 @@ async def on_message(msg):
             + f"{total_locked} AKA **\n• 24h Change•**{aka_24change:19.2f} % **"
         )
     elif cmd == "pool":
-        pass
+        return
     else:
         message = f"{data['unknown']}"
 
