@@ -58,12 +58,16 @@ async def on_message(msg):
     # We do not want the bot to respond to Bots or Webhooks
     if msg.author.bot:
         return
-
+    # We want the bot to not answer to messages that have no content
+    # example only attachment messages.
+    if not msg.content:
+        return
     # Bot checks BOT_PREFIX
-    if msg.content:
-        if msg.content[0] != BOT_PREFIX:
-            return
-
+    if msg.content and msg.content[0] != BOT_PREFIX:
+        return
+    # Bot ignore all system messages
+    if msg.type is not discord.MessageType.default:
+        return
     # Bot runs in #akroma-bot channel and private channels for everyone
     # Bot runs in all channels for specific roles
     if not (
@@ -77,7 +81,7 @@ async def on_message(msg):
         await client.send_message(msg.channel, message)
         return
 
-    args = msg.content[1:].split(" ")
+    args = msg.content[1:].split()
     cmd = args[0].lower()
     if cmd == "help":
         message = "\n".join(data["help"])
@@ -89,14 +93,13 @@ async def on_message(msg):
         message = f"{data['awesome']}"
     elif cmd == "about":
         message = "\n".join(data["about"])
-    elif cmd == "members":
-        if msg.channel.type != discord.ChannelType.private and "Core-Team" in [
-            role.name for role in msg.author.roles
-        ]:
-            members = msg.author.server.member_count
-            message = f"{members}"
-        else:
-            message = f"{data['unknown']}"
+    elif (
+        cmd == "members"
+        and msg.channel.type != discord.ChannelType.private
+        and "Core-Team" in [role.name for role in msg.author.roles]
+    ):
+        members = msg.author.server.member_count
+        message = f"{members}"
     elif cmd == "netinfo":
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
@@ -108,7 +111,7 @@ async def on_message(msg):
         diff = akroma_api["difficulty"]
         hashrate = akroma_api["hashRate"]
         message = (
-            f"• Block Height• **{format(last_block, ',')}**\n• Avg"
+            f"• Block Height• **{last_block:,}**\n• Avg"
             + f" Block Time• **{round(avg_bt, 2)} s**\n• Network Hashrate• **"
             + f"{hashrate} GH/s**\n• Network Difficulty• **{diff} Th**"
         )
@@ -132,8 +135,9 @@ async def on_message(msg):
         total_paid = network_api["data"]["totalPaid"]
         guide_link = data["network"]["guide_link"]
         for x in range(len(data["epoch"]["limit"])):
-            if float(data["epoch"]["limit"][x]) <= last_block and last_block < float(
-                data["epoch"]["limit"][x + 1]
+            if (
+                float(data["epoch"]["limit"][x]) + 1 <= last_block
+                and last_block < float(data["epoch"]["limit"][x + 1]) + 1
             ):
                 roi_value = (
                     365
@@ -160,8 +164,9 @@ async def on_message(msg):
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
         for x in range(len(data["epoch"]["limit"])):
-            if float(data["epoch"]["limit"][x]) <= last_block and last_block < float(
-                data["epoch"]["limit"][x + 1]
+            if (
+                float(data["epoch"]["limit"][x]) + 1 <= last_block
+                and last_block < float(data["epoch"]["limit"][x + 1]) + 1
             ):
                 total = (
                     float(data["epoch"]["mnr"][x])
@@ -169,15 +174,15 @@ async def on_message(msg):
                     + float(data["epoch"]["dev"][x])
                 )
                 time_left = (
-                    (float(data["epoch"]["limit"][x + 1]) - last_block - 1)
+                    (float(data["epoch"]["limit"][x + 1]) - last_block + 1)
                     * avg_bt
                     / 86.4
                     / 10 ** 3
                 )
                 message = (
                     f"{data['epoch']['bh']}{last_block}{data['epoch']['nesb']}"
-                    + f"{float(data['epoch']['limit'][x+1])+1}"
-                    + f"{data['epoch']['ech']}{time_left:10.3f}"
+                    + f"{float(data['epoch']['limit'][x+1])+1:1.0f}"
+                    + f"{data['epoch']['ech']}{time_left:1.3f}"
                     + f"{data['epoch']['brew']}{data['epoch']['mnr'][x]:5.2f} |"
                     + f"{data['epoch']['mn'][x]:5.2f} |"
                     + f"{data['epoch']['dev'][x]:5.2f} |  **{total:5.2f}  "
@@ -193,20 +198,21 @@ async def on_message(msg):
                 print(f"{data['cmc']['cmc_aka']} is down")
         aka_usd_price = cmc_aka_api["data"]["quotes"]["USD"]["price"]
         if len(args) < 2:
-            message = f"_The price of ***1 AKA*** is ***{round(aka_usd_price, 2)}$***._"
+            message = f"_The price of ***1 AKA*** is ***{round(aka_usd_price, 3)}$***._"
             await client.send_message(msg.channel, message)
             return
         cmd1 = args[1].lower()
         if not is_number(cmd1):
-            message = f"_The price of ***1 AKA*** is ***{round(aka_usd_price, 2)}$***._"
+            message = f"_The price of ***1 AKA*** is ***{round(aka_usd_price, 3)}$***._"
         elif cmd1 == "0":
             message = "Welcome young one! We have all started with **0 AKA** zilionsof aeons ago!"
         elif is_number(cmd1) and float(cmd1) < 0:
             message = "Hmm! Yup! I feel sorry for you! You owe **AKA**... I feel your pain friend!"
         elif is_number(cmd1):
             message = (
-                f"**{cmd1} AKA** = **{round(float(aka_usd_price)*float(cmd1),2)}$**"
-                + f"\n_The price of ***1 AKA*** is ***{round(aka_usd_price, 2)}$***_"
+                f"**{round(float(cmd1),2):,} AKA** = **"
+                + f"{round(float(aka_usd_price)*float(cmd1),2):,}$**"
+                + f"\n_The price of ***1 AKA*** is ***{round(aka_usd_price, 3)}$***_"
             )
 
     elif cmd == "coininfo":
