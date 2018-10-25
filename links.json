@@ -55,5 +55,13 @@
           },
   "cmc": {"cmc_btc":"https://api.coinmarketcap.com/v2/ticker/1/",
           "cmc_aka":"https://api.coinmarketcap.com/v2/ticker/3151/"
-          }
+          },
+  "akausd": {"default": "_The price of ***1 AKA*** is ***",
+             "zero": "Welcome young one! We have all started with **0 AKA** zilions of aeons ago!",
+             "neg": "Hmm! Yup! I feel sorry for you! You owe **AKA**... I feel your pain friend!"
+          },
+  "hpow": {"default": "Input your hashpower in Mh/s, like `!hpow 123`.",
+           "zero": "And you call yourself a miner?! Ha :smile: Even my processor can mine more than this!",
+           "neg": "You deffinatly have reached something umbelievable! Nobody have **unmined** anything till now! Do not forget to register the tech! :joy:"
+         }
 }

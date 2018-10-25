@@ -59,11 +59,9 @@ async def on_message(msg):
     if msg.author.bot:
         return
     # We want the bot to not answer to messages that have no content
-    # example only attachment messages.
-    if not msg.content:
-        return
+    # (example only attachment messages)
     # Bot checks BOT_PREFIX
-    if msg.content and msg.content[0] != BOT_PREFIX:
+    if not msg.content or msg.content[0] != BOT_PREFIX:
         return
     # Bot ignore all system messages
     if msg.type is not discord.MessageType.default:
@@ -83,23 +81,13 @@ async def on_message(msg):
 
     args = msg.content[1:].split()
     cmd = args[0].lower()
+    # -------- <help> --------
     if cmd == "help":
         message = "\n".join(data["help"])
+    # -------- <links> --------
     elif cmd == "links":
         message = "\n".join(data["links"])
-    elif cmd == "roadmap":
-        message = f"{data['roadmap']}"
-    elif cmd == "awesome":
-        message = f"{data['awesome']}"
-    elif cmd == "about":
-        message = "\n".join(data["about"])
-    elif (
-        cmd == "members"
-        and msg.channel.type != discord.ChannelType.private
-        and "Core-Team" in [role.name for role in msg.author.roles]
-    ):
-        members = msg.author.server.member_count
-        message = f"{members}"
+    # -------- <netinfo> --------
     elif cmd == "netinfo":
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
@@ -115,8 +103,7 @@ async def on_message(msg):
             + f" Block Time• **{round(avg_bt, 2)} s**\n• Network Hashrate• **"
             + f"{hashrate} GH/s**\n• Network Difficulty• **{diff} Th**"
         )
-    elif cmd == "hpow":
-        return
+    # -------- <mninfo> --------
     elif cmd == "mninfo":
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
@@ -158,8 +145,92 @@ async def on_message(msg):
                     + f"**{total_locked} AKA**\n• Rewards •             **{total_paid}"
                     + f" AKA**\n{guide_link}"
                 )
+    # -------- <hpow> --------
+    elif cmd == "hpow":
+        avg_bt = getAverageBlockTime(6500)
+        last_block = w3.eth.blockNumber
+        async with get(data["cmc"]["cmc_aka"]) as cmc_aka:
+            if cmc_aka.status == 200:
+                cmc_aka_api = await cmc_aka.json()
+            else:
+                print(f"{data['cmc']['cmc_aka']} is down")
+        aka_usd_price = float(cmc_aka_api["data"]["quotes"]["USD"]["price"])
+        async with get(data["akroma"]) as akroma:
+            if akroma.status == 200:
+                akroma_api = await akroma.json()
+            else:
+                print(f"{data['akroma']} is down")
+        diff = float(akroma_api["difficulty"])
+        if len(args) < 2:
+            message = f"{data['hpow']['default']}"
+            await client.send_message(msg.channel, message)
+            return
+        cmd1 = args[1].lower()
+        if not is_number(cmd1):
+            message = f"{data['hpow']['default']}"
+        elif cmd1 == "0":
+            message = f"{data['hpow']['zero']}"
+        elif is_number(cmd1) and float(cmd1) < 0:
+            message = f"{data['akausd']['neg']}"
+        elif is_number(cmd1):
+            for x in range(len(data["epoch"]["limit"])):
+                if (
+                    float(data["epoch"]["limit"][x]) + 1 <= last_block
+                    and last_block < float(data["epoch"]["limit"][x + 1]) + 1
+                ):
+                    mnr_rwd = data["epoch"]["mnr"][x]
+                    cmd1 = float(cmd1)
+                    message = (
+                        f"Current network difficulty is **{diff} Th**.\nA hashrate of "
+                        + f"**{cmd1:1.0f} Mh/s** will get you approximately **"
+                        + f"{cmd1/diff*36*mnr_rwd/avg_bt/10**3:1.2f} AKA** _(***"
+                        + f"{cmd1/diff*36*mnr_rwd/avg_bt/10**3*aka_usd_price:1.2f}"
+                        + f"$***)_ per **hour** and **"
+                        + f"{cmd1/diff*36*mnr_rwd*24/avg_bt/10**3:1.2f} AKA** _(***"
+                        + f"{cmd1/diff*36*mnr_rwd*24/avg_bt/10**3*aka_usd_price:1.2f}"
+                        + f"$***)_ per **day** at current network difficulty."
+                    )
+    # -------- <mnrewards> --------
     elif cmd == "mnrewards":
         return
+    # -------- <akausd> --------
+    elif cmd == "akausd":
+        async with get(data["cmc"]["cmc_aka"]) as cmc_aka:
+            if cmc_aka.status == 200:
+                cmc_aka_api = await cmc_aka.json()
+            else:
+                print(f"{data['cmc']['cmc_aka']} is down")
+        aka_usd_price = cmc_aka_api["data"]["quotes"]["USD"]["price"]
+        if len(args) < 2:
+            message = f"{data['akausd']['default']}{round(aka_usd_price, 3)}$***._"
+            await client.send_message(msg.channel, message)
+            return
+        cmd1 = args[1].lower()
+        if not is_number(cmd1):
+            message = f"{data['akausd']['default']}{round(aka_usd_price, 3)}$***._"
+        elif cmd1 == "0":
+            message = f"{data['akausd']['zero']}"
+        elif is_number(cmd1) and float(cmd1) < 0:
+            message = f"{data['akausd']['neg']}"
+        elif is_number(cmd1):
+            message = (
+                f"**{round(float(cmd1),2):,} AKA** = **"
+                + f"{round(float(aka_usd_price)*float(cmd1),2):,}$**"
+                + f"\n{data['akausd']['default']}{round(aka_usd_price, 3)}$***_"
+            )
+    # -------- <roadmap> --------
+    elif cmd == "roadmap":
+        message = f"{data['roadmap']}"
+    # -------- <awesome> --------
+    elif cmd == "awesome":
+        message = f"{data['awesome']}"
+    # -------- <exchange> --------
+    elif cmd == "exchange":
+        return
+    # -------- <pool> --------
+    elif cmd == "pool":
+        return
+    # -------- <epoch> --------
     elif cmd == "epoch":
         avg_bt = getAverageBlockTime(6500)
         last_block = w3.eth.blockNumber
@@ -188,33 +259,7 @@ async def on_message(msg):
                     + f"{data['epoch']['dev'][x]:5.2f} |  **{total:5.2f}  "
                     + f"{data['epoch']['policy']}"
                 )
-    elif cmd == "exchange":
-        return
-    elif cmd == "akausd":
-        async with get(data["cmc"]["cmc_aka"]) as cmc_aka:
-            if cmc_aka.status == 200:
-                cmc_aka_api = await cmc_aka.json()
-            else:
-                print(f"{data['cmc']['cmc_aka']} is down")
-        aka_usd_price = cmc_aka_api["data"]["quotes"]["USD"]["price"]
-        if len(args) < 2:
-            message = f"_The price of ***1 AKA*** is ***{round(aka_usd_price, 3)}$***._"
-            await client.send_message(msg.channel, message)
-            return
-        cmd1 = args[1].lower()
-        if not is_number(cmd1):
-            message = f"_The price of ***1 AKA*** is ***{round(aka_usd_price, 3)}$***._"
-        elif cmd1 == "0":
-            message = "Welcome young one! We have all started with **0 AKA** zilionsof aeons ago!"
-        elif is_number(cmd1) and float(cmd1) < 0:
-            message = "Hmm! Yup! I feel sorry for you! You owe **AKA**... I feel your pain friend!"
-        elif is_number(cmd1):
-            message = (
-                f"**{round(float(cmd1),2):,} AKA** = **"
-                + f"{round(float(aka_usd_price)*float(cmd1),2):,}$**"
-                + f"\n_The price of ***1 AKA*** is ***{round(aka_usd_price, 3)}$***_"
-            )
-
+    # -------- <coininfo> --------
     elif cmd == "coininfo":
         async with get(data["network"]["link"]) as network:
             if network.status == 200:
@@ -246,8 +291,18 @@ async def on_message(msg):
             + f"{aka_circ_supply:10.0f} AKA **\n• Locked Coins•            **"
             + f"{total_locked} AKA **\n• 24h Change•**{aka_24change:19.2f} % **"
         )
-    elif cmd == "pool":
-        return
+    # -------- <about> --------
+    elif cmd == "about":
+        message = "\n".join(data["about"])
+    # -------- <members(Core-Team only)> --------
+    elif (
+        cmd == "members"
+        and msg.channel.type != discord.ChannelType.private
+        and "Core-Team" in [role.name for role in msg.author.roles]
+    ):
+        members = msg.author.server.member_count
+        message = f"Current number of members: {members}"
+
     else:
         message = f"{data['unknown']}"
 
