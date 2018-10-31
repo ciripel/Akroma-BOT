@@ -66,6 +66,7 @@ async def on_message(msg):
     # Bot ignore all system messages
     if msg.type is not discord.MessageType.default:
         return
+
     # Bot runs in #akroma-bot channel and private channels for everyone
     # Bot runs in all channels for specific roles
     if not (
@@ -192,7 +193,49 @@ async def on_message(msg):
                     )
     # -------- <mnrewards> --------
     elif cmd == "mnrewards":
-        return
+        avg_bt = getAverageBlockTime(6500)
+        last_block = w3.eth.blockNumber
+        async with get(data["cmc"]["cmc_aka"]) as cmc_aka:
+            if cmc_aka.status == 200:
+                cmc_aka_api = await cmc_aka.json()
+            else:
+                print(f"{data['cmc']['cmc_aka']} is down")
+        aka_usd_price = float(cmc_aka_api["data"]["quotes"]["USD"]["price"])
+        async with get(data["network"]["link"]) as network:
+            if network.status == 200:
+                network_api = await network.json()
+            else:
+                print(f"{data['network']['link']} is down")
+        remote_nodes = network_api["data"]["totalRemote"]
+        full_nodes = network_api["data"]["totalFull"]
+        boot_nodes = network_api["data"]["totalBoot"]
+        balefire_nodes = network_api["data"]["totalBalefire"]
+        if len(args) < 2:
+            for x in range(len(data["epoch"]["limit"])):
+                if (
+                    float(data["epoch"]["limit"][x]) + 1 <= last_block
+                    and last_block < float(data["epoch"]["limit"][x + 1]) + 1
+                ):
+                    mn_rwd = data["epoch"]["mn"][x]
+                    message = f"**1** Full Masternode will give you approximately **{0.6*3600*24/avg_bt*mn_rwd/full_nodes:1.3f} AKA** _(***{0.6*3600*24/avg_bt*mn_rwd/full_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**1** Remote Masternode will give you approximately **{0.2*3600*24/avg_bt*mn_rwd/remote_nodes:1.3f} AKA** _(***{0.2*3600*24/avg_bt*mn_rwd/remote_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**1** Boot Masternode will give you approximately **{0.2*3600*24/avg_bt*mn_rwd/boot_nodes:1.3f} AKA** _(***{0.2*3600*24/avg_bt*mn_rwd/boot_nodes*aka_usd_price:1.3f}$***)_ per **day**."
+                    await client.send_message(msg.channel, message)
+                    return
+        cmd1 = args[1].lower()
+        if not is_number(cmd1):
+            message = f"{data['mnrewards']['default']}"
+        elif cmd1 == "0":
+            message = f"{data['mnrewards']['zero']}"
+        elif is_number(cmd1) and float(cmd1) < 0:
+            message = f"{data['mnrewards']['neg']}"
+        elif is_number(cmd1):
+            for x in range(len(data["epoch"]["limit"])):
+                if (
+                    float(data["epoch"]["limit"][x]) + 1 <= last_block
+                    and last_block < float(data["epoch"]["limit"][x + 1]) + 1
+                ):
+                    mn_rwd = data["epoch"]["mn"][x]
+                    cmd1 = float(cmd1)
+                    message = f"**{cmd1:1.0f}** Full Masternode will give you approximately **{cmd1*0.6*3600*24/avg_bt*mn_rwd/full_nodes:1.3f} AKA** _(***{cmd1*0.6*3600*24/avg_bt*mn_rwd/full_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**{cmd1:1.0f}** Remote Masternode will give you approximately **{cmd1*0.2*3600*24/avg_bt*mn_rwd/remote_nodes:1.3f} AKA** _(***{cmd1*0.2*3600*24/avg_bt*mn_rwd/remote_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**{cmd1:1.0f}** Boot Masternode will give you approximately **{cmd1*0.2*3600*24/avg_bt*mn_rwd/boot_nodes:1.3f} AKA** _(***{cmd1*0.2*3600*24/avg_bt*mn_rwd/boot_nodes*aka_usd_price:1.3f}$***)_ per **day**."
     # -------- <akausd> --------
     elif cmd == "akausd":
         async with get(data["cmc"]["cmc_aka"]) as cmc_aka:

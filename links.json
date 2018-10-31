@@ -13,8 +13,6 @@
            "-- `!akausd [amount]` | Current price in USD.",
            "-- `!roadmap` | Link to Akroma Road-map.",
            "-- `!awesome` | Link to Awesome Akroma.",
-           "-- `!exchange [EXCHANGE]` | Current Akroma exchanges [_exchange info_].",
-           "-- `!pool [POOL]` | Akroma mining pools [_connection info_].",
            "-- `!epoch` - Akroma monetary policy",
            "-- `!coininfo` | Show coin info.",
            "-- `!about` | Info about this bot."
@@ -52,10 +50,10 @@
   "akroma": "https://akroma.io/api/akroma",
   "network": {"link": "https://akroma.io/api/network",
               "guide_link": "• Install Guide • <https://docs.akroma.io/masternodes/operating-systems/installation-on-linux>"
-          },
+            },
   "cmc": {"cmc_btc":"https://api.coinmarketcap.com/v2/ticker/1/",
           "cmc_aka":"https://api.coinmarketcap.com/v2/ticker/3151/"
-          },
+        },
   "akausd": {"default": "_The price of ***1 AKA*** is ***",
              "zero": "Welcome young one! We have all started with **0 AKA** zilions of aeons ago!",
              "neg": "Hmm! Yup! I feel sorry for you! You owe **AKA**... I feel your pain friend!"
@@ -63,5 +61,9 @@
   "hpow": {"default": "Input your hashpower in Mh/s, like `!hpow 123`.",
            "zero": "And you call yourself a miner?! Ha :smile: Even my processor can mine more than this!",
            "neg": "You deffinatly have reached something umbelievable! Nobody have **unmined** anything till now! Do not forget to register the tech! :joy:"
-         }
+         },
+  "mnrewards": {"default": "Input the the number of nodes, like `!mnrewards 1`.",
+                "zero": "Wow, You did it friend! You have reached the unmeasurable valor of zero masternodes!",
+                "neg": "Are you in debt my friend?! How have you arrived in this position in the crypto world?! How can you be in debt in a world without banks?! :thinking:"
+              }
 }
