@@ -1,5 +1,4 @@
 auth.json
-node_modules/
-.eslintrc.json
-output.txt
-yarn.lock
+Pipfile
+Pipfile.lock
+.mypy_cache
