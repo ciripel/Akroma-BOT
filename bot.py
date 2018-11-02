@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.6
 # Work with Python 3.6
 
 import json
@@ -15,7 +15,7 @@ with open("links.json") as data_file:
     data = json.load(data_file)
 
 TOKEN = auth["token"]
-BOT_PREFIX = "?"
+BOT_PREFIX = "!"
 
 client = Bot(BOT_PREFIX)
 
@@ -127,23 +127,17 @@ async def on_message(msg):
                 float(data["epoch"]["limit"][x]) + 1 <= last_block
                 and last_block < float(data["epoch"]["limit"][x + 1]) + 1
             ):
-                roi_value = (
-                    365
-                    * 36
-                    * 10 ** 5
-                    * 24
-                    / avg_bt
-                    * float(data["epoch"]["mn"][x])
-                    / total_nodes
-                    / (5 * 10 ** 4)
-                )
+                mn_rew = float(data["epoch"]["mn"][x])
+                f_roi_value = 0.6 * 3153600 / avg_bt * mn_rew / full_nodes / 5
+                r_roi_value = 0.2 * 3153600 / avg_bt * mn_rew / remote_nodes / 15
+                bo_roi_value = 0.2 * 3153600 / avg_bt * mn_rew / boot_nodes / 15
                 message = (
-                    f"• Users •**{total_users:23.0f}**\n• Remote Nodes •**"
-                    + f"{remote_nodes:3.0f}**\n• Full Nodes •**{full_nodes:14.0f}**\n"
-                    + f"• Boot Nodes •**{boot_nodes:10.0f}**\n• Balefire Nodes •**"
-                    + f"{balefire_nodes:3.0f}**\n• Total Nodes •**{total_nodes:11.0f}"
-                    + f"**\n• ROI •**{roi_value:30.3f}%**\n• Locked •                "
-                    + f"**{total_locked} AKA**\n• Rewards •             **{total_paid}"
+                    f"• Users • **{total_users:1.0f}**\n• Masternodes • F: **"
+                    + f"{full_nodes:1.0f}** | R: **{remote_nodes:1.0f}** | Bo: **"
+                    + f"{boot_nodes:1.0f}** | Ba: **{balefire_nodes:1.0f}** | T: **"
+                    + f"{total_nodes:1.0f}**\n• ROI • F: **{f_roi_value:1.3f}%** | R: **"
+                    + f"{r_roi_value:1.3f}%** | Bo: **{bo_roi_value:1.3f}%** | Ba: **0%**"
+                    + f"\n• Locked • **{total_locked} AKA**\n• Rewards • **{total_paid}"
                     + f" AKA**\n{guide_link}"
                 )
     # -------- <hpow> --------
