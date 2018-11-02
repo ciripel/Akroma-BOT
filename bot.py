@@ -30,10 +30,7 @@ class FrateHTTPProvider(HTTPProvider):
 
 
 w3 = Web3(
-    [
-        FrateHTTPProvider(data[server])
-        for server in ("localserver", "remoteserver1", "remoteserver", "remoteserver2")
-    ]
+    [FrateHTTPProvider(data[server]) for server in ("localserver", "remoteserver1", "remoteserver", "remoteserver2")]
 )
 
 
@@ -100,8 +97,7 @@ async def on_message(msg):
         diff = akroma_api["difficulty"]
         hashrate = akroma_api["hashRate"]
         message = (
-            f"• Block Height• **{last_block:,}**\n• Avg"
-            + f" Block Time• **{round(avg_bt, 2)} s**\n• Network Hashrate• **"
+            f"• Block Height• **{last_block:,}**\n• Avg Block Time• **{round(avg_bt, 2)} s**\n• Network Hashrate• **"
             + f"{hashrate} GH/s**\n• Network Difficulty• **{diff} Th**"
         )
     # -------- <mninfo> --------
@@ -132,13 +128,11 @@ async def on_message(msg):
                 r_roi_value = 0.2 * 3153600 / avg_bt * mn_rew / remote_nodes / 15
                 bo_roi_value = 0.2 * 3153600 / avg_bt * mn_rew / boot_nodes / 15
                 message = (
-                    f"• Users • **{total_users:1.0f}**\n• Masternodes • F: **"
-                    + f"{full_nodes:1.0f}** | R: **{remote_nodes:1.0f}** | Bo: **"
-                    + f"{boot_nodes:1.0f}** | Ba: **{balefire_nodes:1.0f}** | T: **"
-                    + f"{total_nodes:1.0f}**\n• ROI • F: **{f_roi_value:1.3f}%** | R: **"
-                    + f"{r_roi_value:1.3f}%** | Bo: **{bo_roi_value:1.3f}%** | Ba: **0%**"
-                    + f"\n• Locked • **{total_locked} AKA**\n• Rewards • **{total_paid}"
-                    + f" AKA**\n{guide_link}"
+                    f"• Users • **{total_users:1.0f}**\n• Masternodes • F: **{full_nodes:1.0f}** | R: **"
+                    + f"{remote_nodes:1.0f}** | Bo: **{boot_nodes:1.0f}** | Ba: **{balefire_nodes:1.0f}** | T: **"
+                    + f"{total_nodes:1.0f}**\n• ROI • F: **{f_roi_value:1.3f}%** | R: **{r_roi_value:1.3f}%** | Bo: **"
+                    + f"{bo_roi_value:1.3f}%** | Ba: **0%**\n• Locked • **{total_locked} AKA**\n• Rewards • **"
+                    + f"{total_paid} AKA**\n{guide_link}"
                 )
     # -------- <hpow> --------
     elif cmd == "hpow":
@@ -176,14 +170,12 @@ async def on_message(msg):
                     mnr_rwd = data["epoch"]["mnr"][x]
                     cmd1 = float(cmd1)
                     message = (
-                        f"Current network difficulty is **{diff} Th**.\nA hashrate of "
-                        + f"**{cmd1:1.0f} Mh/s** will get you approximately **"
-                        + f"{cmd1/diff*36*mnr_rwd/avg_bt/10**3:1.2f} AKA** _(***"
-                        + f"{cmd1/diff*36*mnr_rwd/avg_bt/10**3*aka_usd_price:1.2f}"
-                        + f"$***)_ per **hour** and **"
+                        f"Current network difficulty is **{diff} Th**.\nA hashrate of **{cmd1:1.0f} Mh/s** will get "
+                        + f"you approximately **{cmd1/diff*36*mnr_rwd/avg_bt/10**3:1.2f} AKA** _(***"
+                        + f"{cmd1/diff*36*mnr_rwd/avg_bt/10**3*aka_usd_price:1.2f}$***)_ per **hour** and **"
                         + f"{cmd1/diff*36*mnr_rwd*24/avg_bt/10**3:1.2f} AKA** _(***"
-                        + f"{cmd1/diff*36*mnr_rwd*24/avg_bt/10**3*aka_usd_price:1.2f}"
-                        + f"$***)_ per **day** at current network difficulty."
+                        + f"{cmd1/diff*36*mnr_rwd*24/avg_bt/10**3*aka_usd_price:1.2f}$***)_ per **day** at current "
+                        + "network difficulty."
                     )
     # -------- <mnrewards> --------
     elif cmd == "mnrewards":
@@ -211,7 +203,16 @@ async def on_message(msg):
                     and last_block < float(data["epoch"]["limit"][x + 1]) + 1
                 ):
                     mn_rwd = data["epoch"]["mn"][x]
-                    message = f"**1** Full Masternode will give you approximately **{0.6*3600*24/avg_bt*mn_rwd/full_nodes:1.3f} AKA** _(***{0.6*3600*24/avg_bt*mn_rwd/full_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**1** Remote Masternode will give you approximately **{0.2*3600*24/avg_bt*mn_rwd/remote_nodes:1.3f} AKA** _(***{0.2*3600*24/avg_bt*mn_rwd/remote_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**1** Boot Masternode will give you approximately **{0.2*3600*24/avg_bt*mn_rwd/boot_nodes:1.3f} AKA** _(***{0.2*3600*24/avg_bt*mn_rwd/boot_nodes*aka_usd_price:1.3f}$***)_ per **day**."
+                    message = (
+                        f"**1** Full Masternode will give you approximately **"
+                        + f"{0.6*3600*24/avg_bt*mn_rwd/full_nodes:1.3f} AKA** _(***"
+                        + f"{0.6*3600*24/avg_bt*mn_rwd/full_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**1** Remote"
+                        + f" Masternode will give you approximately **{0.2*3600*24/avg_bt*mn_rwd/remote_nodes:1.3f} AK"
+                        + f"A** _(***{0.2*3600*24/avg_bt*mn_rwd/remote_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n*"
+                        + f"*1** Boot Masternode will give you approximately **"
+                        + f"{0.2*3600*24/avg_bt*mn_rwd/boot_nodes:1.3f} AKA** _(***"
+                        + f"{0.2*3600*24/avg_bt*mn_rwd/boot_nodes*aka_usd_price:1.3f}$***)_ per **day**."
+                    )
                     await client.send_message(msg.channel, message)
                     return
         cmd1 = args[1].lower()
@@ -229,7 +230,17 @@ async def on_message(msg):
                 ):
                     mn_rwd = data["epoch"]["mn"][x]
                     cmd1 = float(cmd1)
-                    message = f"**{cmd1:1.0f}** Full Masternode will give you approximately **{cmd1*0.6*3600*24/avg_bt*mn_rwd/full_nodes:1.3f} AKA** _(***{cmd1*0.6*3600*24/avg_bt*mn_rwd/full_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**{cmd1:1.0f}** Remote Masternode will give you approximately **{cmd1*0.2*3600*24/avg_bt*mn_rwd/remote_nodes:1.3f} AKA** _(***{cmd1*0.2*3600*24/avg_bt*mn_rwd/remote_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**{cmd1:1.0f}** Boot Masternode will give you approximately **{cmd1*0.2*3600*24/avg_bt*mn_rwd/boot_nodes:1.3f} AKA** _(***{cmd1*0.2*3600*24/avg_bt*mn_rwd/boot_nodes*aka_usd_price:1.3f}$***)_ per **day**."
+                    message = (
+                        f"**{cmd1:1.0f}** Full Masternode will give you approximately **"
+                        + f"{cmd1*0.6*3600*24/avg_bt*mn_rwd/full_nodes:1.3f} AKA** _(***"
+                        + f"{cmd1*0.6*3600*24/avg_bt*mn_rwd/full_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**"
+                        + f"{cmd1:1.0f}** Remote Masternode will give you approximately **"
+                        + f"{cmd1*0.2*3600*24/avg_bt*mn_rwd/remote_nodes:1.3f} AKA** _(***"
+                        + f"{cmd1*0.2*3600*24/avg_bt*mn_rwd/remote_nodes*aka_usd_price:1.3f}$***)_ per **day**.\n**"
+                        + f"{cmd1:1.0f}** Boot Masternode will give you approximately **"
+                        + f"{cmd1*0.2*3600*24/avg_bt*mn_rwd/boot_nodes:1.3f} AKA** _(***"
+                        + f"{cmd1*0.2*3600*24/avg_bt*mn_rwd/boot_nodes*aka_usd_price:1.3f}$***)_ per **day**."
+                    )
     # -------- <akausd> --------
     elif cmd == "akausd":
         async with get(data["cmc"]["cmc_aka"]) as cmc_aka:
@@ -251,9 +262,8 @@ async def on_message(msg):
             message = f"{data['akausd']['neg']}"
         elif is_number(cmd1):
             message = (
-                f"**{round(float(cmd1),2):,} AKA** = **"
-                + f"{round(float(aka_usd_price)*float(cmd1),2):,}$**"
-                + f"\n{data['akausd']['default']}{round(aka_usd_price, 3)}$***_"
+                f"**{round(float(cmd1),2):,} AKA** = **{round(float(aka_usd_price)*float(cmd1),2):,}$**\n"
+                + f"{data['akausd']['default']}{round(aka_usd_price, 3)}$***_"
             )
     # -------- <roadmap> --------
     elif cmd == "roadmap":
@@ -276,25 +286,13 @@ async def on_message(msg):
                 float(data["epoch"]["limit"][x]) + 1 <= last_block
                 and last_block < float(data["epoch"]["limit"][x + 1]) + 1
             ):
-                total = (
-                    float(data["epoch"]["mnr"][x])
-                    + float(data["epoch"]["mn"][x])
-                    + float(data["epoch"]["dev"][x])
-                )
-                time_left = (
-                    (float(data["epoch"]["limit"][x + 1]) - last_block + 1)
-                    * avg_bt
-                    / 86.4
-                    / 10 ** 3
-                )
+                total = float(data["epoch"]["mnr"][x]) + float(data["epoch"]["mn"][x]) + float(data["epoch"]["dev"][x])
+                time_left = (float(data["epoch"]["limit"][x + 1]) - last_block + 1) * avg_bt / 86.4 / 10 ** 3
                 message = (
                     f"{data['epoch']['bh']}{last_block}{data['epoch']['nesb']}"
-                    + f"{float(data['epoch']['limit'][x+1])+1:1.0f}"
-                    + f"{data['epoch']['ech']}{time_left:1.3f}"
-                    + f"{data['epoch']['brew']}{data['epoch']['mnr'][x]:5.2f} |"
-                    + f"{data['epoch']['mn'][x]:5.2f} |"
-                    + f"{data['epoch']['dev'][x]:5.2f} |  **{total:5.2f}  "
-                    + f"{data['epoch']['policy']}"
+                    + f"{float(data['epoch']['limit'][x+1])+1:1.0f}{data['epoch']['ech']}{time_left:1.3f}"
+                    + f"{data['epoch']['brew']}{data['epoch']['mnr'][x]:5.2f} |{data['epoch']['mn'][x]:5.2f} |"
+                    + f"{data['epoch']['dev'][x]:5.2f} |  **{total:5.2f}  {data['epoch']['policy']}"
                 )
     # -------- <coininfo> --------
     elif cmd == "coininfo":
@@ -321,11 +319,9 @@ async def on_message(msg):
         aka_circ_supply = cmc_aka_api["data"]["circulating_supply"]
         aka_24change = cmc_aka_api["data"]["quotes"]["USD"]["percent_change_24h"]
         message = (
-            f"• Current Price•**{aka_usd_price/btc_usd_price:22.8f} BTC ** | **"
-            + f"{aka_usd_price:8.4f}$**\n• 24h Volume •**"
-            + f"{aka_24vol/btc_usd_price:18.3f} BTC ** | **{aka_24vol:10.2f}$**"
-            + f"\n• Market Cap•**{aka_mcap:21.0f}$**\n• Circulating Supply• **"
-            + f"{aka_circ_supply:10.0f} AKA **\n• Locked Coins•            **"
+            f"• Current Price•**{aka_usd_price/btc_usd_price:22.8f} BTC ** | **{aka_usd_price:8.4f}$**\n• 24h Volume •"
+            + f"**{aka_24vol/btc_usd_price:18.3f} BTC ** | **{aka_24vol:10.2f}$**\n• Market Cap•**{aka_mcap:21.0f}$**"
+            + f"\n• Circulating Supply• **{aka_circ_supply:10.0f} AKA **\n• Locked Coins•            **"
             + f"{total_locked} AKA **\n• 24h Change•**{aka_24change:19.2f} % **"
         )
     # -------- <about> --------
