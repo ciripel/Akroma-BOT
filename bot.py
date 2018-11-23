@@ -160,7 +160,7 @@ async def on_message(msg):
         elif cmd1 == "0":
             message = f"{data['hpow']['zero']}"
         elif is_number(cmd1) and float(cmd1) < 0:
-            message = f"{data['akausd']['neg']}"
+            message = f"{data['hpow']['neg']}"
         elif is_number(cmd1):
             for x in range(len(data["epoch"]["limit"])):
                 if (
@@ -276,7 +276,35 @@ async def on_message(msg):
         return
     # -------- <pool> --------
     elif cmd == "pool":
-        return
+        with open("pool.json") as data_file:
+            pools = json.load(data_file)
+        with open("check_time.json") as data_file:
+            check_time = json.load(data_file)
+        async with get(data["akroma"]) as akroma:
+            if akroma.status == 200:
+                akroma_api = await akroma.json()
+            else:
+                print(f"{data['akroma']} is down")
+        hashrate = float(akroma_api["hashRate"])
+        solo = float(hashrate)
+        message_list = []
+        message_list.append(f"Network hash: **{float(hashrate)} GH/s**")
+        for a in range(len(pools)):
+            procent = float(pools[a]["hash"]) / 10 ** 9 / float(hashrate) * 100
+            solo = solo - float(pools[a]["hash"]) / 10 ** 9
+            if float(pools[a]["hash"]) / 10 ** 9 < 1:
+                message_list.append(
+                    f"<{pools[a]['link']}>: **{float(pools[a]['hash'])/10**6:1.2f} MH/s** ({procent:1.2f}%)"
+                )
+            else:
+                message_list.append(
+                    f"<{pools[a]['link']}>: **{float(pools[a]['hash'])/10**9:1.2f} GH/s** ({procent:1.2f}%)"
+                )
+
+        soloproc = solo / float(hashrate) * 100
+        message_list.append(f"Unknown Pools | Solo miners: **{solo:1.2f} GH/s** ({soloproc:1.2f}%)")
+        message_list.append(f"\n_Last API request on {check_time['last_check']}_")
+        message = "\n".join(message_list)
     # -------- <epoch> --------
     elif cmd == "epoch":
         avg_bt = getAverageBlockTime(6500)
