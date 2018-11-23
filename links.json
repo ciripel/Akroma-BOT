@@ -13,6 +13,7 @@
            "-- `!akausd [amount]` | Current price in USD.",
            "-- `!roadmap` | Link to Akroma Road-map.",
            "-- `!awesome` | Link to Awesome Akroma.",
+           "-- `!pool` | Akroma mining pools.",
            "-- `!epoch` - Akroma monetary policy",
            "-- `!coininfo` | Show coin info.",
            "-- `!about` | Info about this bot."
