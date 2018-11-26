@@ -1,61 +1,66 @@
 [
   {
-    "hash": 219654654,
+    "hash": 251763436,
     "link": "http://aka.crazypool.org/",
     "api": "http://aka.crazypool.org/api/stats"
   },
   {
-    "hash": 409343715,
+    "hash": 409116175,
     "link": "http://cryptowarlords.net/",
     "api": "http://cryptowarlords.net/api/stats"
   },
   {
-    "hash": 890515527,
-    "link": "http://www.akroma.ovh/",
-    "api": "http://www.akroma.ovh/api/stats"
+    "hash": 524941000,
+    "link": "https://aka.fairpool.xyz/",
+    "api": "https://aka.fairpool.xyz/api/stats"
   },
   {
-    "hash": 2236666664,
+    "hash": 1324999998,
     "link": "https://aka.clona.ru/",
     "api": "https://aka.clona.ru/api/stats"
   },
   {
-    "hash": 2835390523,
-    "link": "https://comining.io/",
-    "api": "https://api.comining.io/?key=X7Bu1WPg6h2Uav2wiWZgVgc"
+    "hash": 1992233717,
+    "link": "http://www.akroma.ovh/",
+    "api": "http://www.akroma.ovh/api/stats"
   },
   {
-    "hash": 3785358734,
+    "hash": 2022475032,
     "link": "https://akroma.bylt.gq/",
     "api": "https://akroma.bylt.gq/api/stats"
   },
   {
-    "hash": 3848184040,
+    "hash": 2082072086,
+    "link": "https://comining.io/",
+    "api": "https://api.comining.io/?key=X7Bu1WPg6h2Uav2wiWZgVgc"
+  },
+  {
+    "hash": 3857009230,
     "link": "https://akroma.cryptopools.info/",
     "api": "https://akroma.cryptopools.info/api/stats"
   },
   {
-    "hash": 4507395584,
+    "hash": 4329147120,
     "link": "https://aka.solopool.org/",
     "api": "https://aka.solopool.org/api/stats"
   },
   {
-    "hash": 6556169886,
+    "hash": 6156354334,
     "link": "https://mining-aka.pool.sexy/",
     "api": "https://mining-aka.pool.sexy/api/stats"
   },
   {
-    "hash": 8563941009,
+    "hash": 6496949247,
     "link": "http://mining.akroma.org/",
     "api": "http://mining.akroma.org/api/stats"
   },
   {
-    "hash": 25045461736,
+    "hash": 23121345459,
     "link": "https://aka.2miners.com/",
     "api": "https://aka.2miners.com/api/stats"
   },
   {
-    "hash": 35555527124,
+    "hash": 29955493317,
     "link": "http://akroma.minerpool.net/",
     "api": "http://akroma.minerpool.net/api/stats"
   }
