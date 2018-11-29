@@ -73,5 +73,50 @@
     "hash": 0,
     "link": "http://aka.cryptopool.network/",
     "api": "http://aka.cryptopool.network/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "https://solo-aka.2miners.com/",
+    "api": "https://solo-aka.2miners.com/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "https://akroma.upool.in/",
+    "api": "https://akroma.upool.in/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "http://aka-solo.cryptodig.ru/",
+    "api": "http://aka-solo.cryptodig.ru/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "https://solo-akroma.dgpool.ru/",
+    "api": "https://solo-akroma.dgpool.ru/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "https://uleypool.com/aka/",
+    "api": "https://uleypool.com/aka/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "http://solo-aka.crazypool.org/",
+    "api": "http://solo-aka.crazypool.org/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "https://akroma.dgpool.ru/",
+    "api": "https://akroma.dgpool.ru/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "https://akroma.europool.me/",
+    "api": "https://akroma.europool.me/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "http://aka.farmine.net/",
+    "api": "http://aka.farmine.net/api/stats"
   }
 ]
