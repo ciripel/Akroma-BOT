@@ -63,5 +63,15 @@
     "hash": 29955493317,
     "link": "http://akroma.minerpool.net/",
     "api": "http://akroma.minerpool.net/api/stats"
-  }
+  },
+  {
+    "hash": 0,
+    "link": "https://akroma.ahash.ru/",
+    "api": "https://akroma.ahash.ru/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "http://aka.cryptopool.network/",
+    "api": "http://aka.cryptopool.network/api/stats"
+  },
 ]
