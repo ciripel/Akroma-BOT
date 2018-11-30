@@ -28,6 +28,13 @@ for a in range(len(pools)):
                 pools[a]["hash"] = int(pool_api["pool"]["hashrate"])
             else:
                 print(f"{pools[a]['api']} is down")
+    elif pools[a]["link"] == "https://aikapool.com/aka/":
+        with get(pools[a]["api"]) as api:
+            if api.status_code == 200:
+                pool_api = api.json()
+                pools[a]["hash"] = int(pool_api["pool_hashrate"])
+            else:
+                print(f"{pools[a]['api']} is down")
     else:
         with get(pools[a]["api"]) as api:
             if api.status_code == 200:
