@@ -13,9 +13,14 @@ with open("auth.json") as data_file:
     auth = json.load(data_file)
 with open("links.json") as data_file:
     data = json.load(data_file)
+with open("market.json") as data_file:
+    markets = json.load(data_file)
 
 TOKEN = auth["token"]
+HEADERS = {}
+HEADERS["X-CMC_PRO_API_KEY"] = auth["cmc_headers"]
 BOT_PREFIX = "!"
+
 
 client = Bot(BOT_PREFIX)
 
@@ -271,9 +276,58 @@ async def on_message(msg):
     # -------- <awesome> --------
     elif cmd == "awesome":
         message = f"{data['awesome']}"
-    # -------- <exchange> --------
-    elif cmd == "exchange":
-        return
+    # -------- <markets> --------
+    elif cmd == "markets":
+        async with get(data["cmc"]["cmc_aka1"], headers=HEADERS) as cmc_aka:
+            if cmc_aka.status == 200:
+                cmc_aka_api = await cmc_aka.json()
+                aka_usd_price = float(cmc_aka_api["data"]["AKA"]["quote"]["USD"]["price"])
+            else:
+                print(f"{data['cmc']['cmc_aka1']} is down")
+        async with get(data["cmc"]["cmc_btc1"], headers=HEADERS) as cmc_btc:
+            if cmc_btc.status == 200:
+                cmc_btc_api = await cmc_btc.json()
+                btc_usd_price = float(cmc_btc_api["data"]["BTC"]["quote"]["USD"]["price"])
+            else:
+                print(f"{data['cmc']['cmc_aka1']} is down")
+        message_list = []
+        message_list.append("**Akroma** is listed on the following exchanges:")
+        for a in range(len(markets)):
+            message_list.append(f"{a+1}. <{markets[a]['link']}>")
+        message_list.append("\n_Use `!markets info` for stats of the markets_")
+        if len(args) < 2 or args[1].lower() != "info":
+            message = "\n".join(message_list)
+        else:
+            vol_total = 0
+            for a in range(len(markets)):
+                if markets[a]["link"] == "https://graviex.net/markets/akabtc":
+                    async with get(markets[a]["api"]) as api:
+                        if api.status == 200:
+                            markets_api = await api.json()
+                            markets[a]["volume_24h"] = aka_usd_price * float(markets_api["ticker"]["vol"])
+                            usd_price = btc_usd_price * float(markets_api["ticker"]["last"])
+                            markets[a]["price"] = usd_price
+                        else:
+                            print(f"{markets[a]['api']} is down")
+                    vol_total = vol_total + float(markets[a]["volume_24h"])
+                elif markets[a]["link"] == "https://app.stex.com/en/basic-trade/pair/BTC/AKA/1D":
+                    async with get(markets[a]["api"]) as api:
+                        if api.status == 200:
+                            markets_api = await api.json()
+                            for i in range(len(markets_api)):
+                                if markets_api[i]["market_name"] == "AKA_BTC":
+                                    markets[a]["volume_24h"] = aka_usd_price * float(markets_api[i]["vol"])
+                                    usd_price = btc_usd_price * float(markets_api[i]["last"])
+                                    markets[a]["price"] = usd_price
+                        else:
+                            print(f"{markets[a]['api']} is down")
+                    vol_total = vol_total + float(markets[a]["volume_24h"])
+            for a in range(len(markets)):
+                markets[a]["vol_percent"] = float(markets[a]["volume_24h"]) / vol_total * 100
+            markets.sort(key=lambda x: x["volume_24h"], reverse=True)
+            with open("market.json", "w") as file:
+                json.dump(markets, file, indent=2)
+            message = "Markets info!"
     # -------- <pool> --------
     elif cmd == "pool":
         with open("pool.json") as data_file:
