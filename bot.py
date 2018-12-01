@@ -322,12 +322,37 @@ async def on_message(msg):
                         else:
                             print(f"{markets[a]['api']} is down")
                     vol_total = vol_total + float(markets[a]["volume_24h"])
+            max_source = 0
             for a in range(len(markets)):
                 markets[a]["vol_percent"] = float(markets[a]["volume_24h"]) / vol_total * 100
+                max_source = max(6, max_source, len(markets[a]["source"]))
             markets.sort(key=lambda x: x["volume_24h"], reverse=True)
             with open("market.json", "w") as file:
                 json.dump(markets, file, indent=2)
-            message = "Markets info!"
+            message = """
+```
++--+-------{a}-+-----------+-------------+----------+---------+
+| #| Source{0} | Pair      |   Vol (24h) |    Price | Vol (%) |
++--+-------{a}-+-----------+-------------+----------+---------+
+{markets}
++--+-------{a}-+-----------+-------------+----------+---------+
+```
+""".format(
+                " " * (max_source - 6),
+                a="-" * (max_source - 6),
+                markets="\n".join(
+                    "|{:>2d}| {:<{max_source}} | {:<9} | {:>10.2f}$ | {:>7.3f}$ | {:>6.2f}% |".format(
+                        i + 1,
+                        markets[i]["source"],
+                        markets[i]["pair"],
+                        markets[i]["volume_24h"],
+                        markets[i]["price"],
+                        markets[i]["vol_percent"],
+                        max_source=max_source,
+                    )
+                    for i in range(len(markets))
+                ),
+            )
     # -------- <pool> --------
     elif cmd == "pool":
         with open("pool.json") as data_file:

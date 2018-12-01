@@ -55,8 +55,8 @@
             },
   "cmc": {"cmc_btc":"https://api.coinmarketcap.com/v2/ticker/1/",
           "cmc_aka":"https://api.coinmarketcap.com/v2/ticker/3151/",
-          "cmc_aka1":"https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=AKA",
-          "cmc_btc1":"https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC"
+          "cmc_aka1":"https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=AKA",
+          "cmc_btc1":"https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC"
         },
   "akausd": {"default": "_The price of ***1 AKA*** is ***",
              "zero": "Welcome young one! We have all started with **0 AKA** zilions of aeons ago!",
