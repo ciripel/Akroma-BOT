@@ -1,0 +1,20 @@
+[
+  {
+    "source": "Graviex",
+    "pair": "AKA/BTC",
+    "volume_24h": 8623.84311435327,
+    "price": 0.05333368994248049,
+    "vol_percent": 86.30028459962124,
+    "link": "https://graviex.net/markets/akabtc",
+    "api": "https://graviex.net/api/v2/tickers/akabtc"
+  },
+  {
+    "source": "Stex",
+    "pair": "AKA/BTC",
+    "volume_24h": 1368.9896490176156,
+    "price": 0.0493469738937,
+    "vol_percent": 13.699715400378759,
+    "link": "https://app.stex.com/en/basic-trade/pair/BTC/AKA/1D",
+    "api": "https://app.stex.com/api2/ticker"
+  }
+]
