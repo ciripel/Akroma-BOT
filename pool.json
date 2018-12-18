@@ -133,5 +133,10 @@
     "hash": 33228865919,
     "link": "http://akroma.minerpool.net/",
     "api": "http://akroma.minerpool.net/api/stats"
+  },
+  {
+    "hash": 0,
+    "link": "https://akroma.wattpool.net/",
+    "api": "https://akroma.wattpool.net/api/stats"
   }
 ]
