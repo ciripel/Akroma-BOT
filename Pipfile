@@ -1,13 +1,13 @@
 [[source]]
+name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
-name = "pypi"
-
-[packages]
-discord = "*"
-"web3" = "*"
 
 [dev-packages]
+
+[packages]
+web3 = "*"
+discord = "*"
 
 [requires]
 python_version = "3.6"

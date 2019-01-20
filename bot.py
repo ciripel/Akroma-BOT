@@ -29,7 +29,7 @@ class FrateHTTPProvider(HTTPProvider):
     def make_request(self, method, params):
         try:
             response = super().make_request(method, params)
-        except Exception as e:
+        except Exception:
             raise CannotHandleRequest
         return response
 
